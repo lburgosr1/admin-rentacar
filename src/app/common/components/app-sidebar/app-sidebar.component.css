@@ -1,0 +1,6 @@
+
+.sidebar-nav > ul > li > a.active {
+  font-weight: 400 !important;
+  background: #242a33 !important;
+  color: #26c6da !important;
+}

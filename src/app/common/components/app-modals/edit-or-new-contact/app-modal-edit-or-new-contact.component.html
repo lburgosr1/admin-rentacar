@@ -1,0 +1,106 @@
+<div class="modal-content">
+  <div class="modal-header">
+    <h4 class="modal-title" id="myModalLabel">{{contact ? 'Editar' : 'Nuevo'}} Contacto</h4>
+    <button type="button" class="close" data-dismiss="modal" (click)="cancel()">
+      <i class="fa fa-times" aria-hidden="true"></i>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form class="form-horizontal form-material" [formGroup]="form">
+      <div class="form-group">
+        <ng-container *ngIf="isCompany">
+          <div class="col-md-12 m-b-20">
+            <input type="text" class="form-control" [ngClass]="{'form-control-danger': firstName?.invalid}" formControlName="firstName" placeholder="Nombres*">
+            <app-error-message-form [abstractControl]="firstName"></app-error-message-form>
+          </div>
+          <div class="col-md-12 m-b-20">
+            <input type="text" class="form-control" formControlName="lastName" placeholder="Apellidos*">
+            <app-error-message-form [abstractControl]="lastName"></app-error-message-form>
+          </div>
+          <div class="col-md-12 m-b-20">
+            <select class="form-control" formControlName="department" [ngClass]="{'form-control-danger': department?.invalid}">
+              <option value="" selected disabled>Seleccione*</option>
+              <option *ngFor="let department of departments" [value]="department">
+                {{department}}
+              </option>
+            </select>
+            <app-error-message-form [abstractControl]="department"></app-error-message-form>
+          </div>
+        </ng-container>
+
+        <ng-container formArrayName="contacts">
+          <ng-container *ngFor="let control of contactsArr.controls; let i = index">
+            <div class="row justify-content-center m-b-10" [formGroup]="control | formGroup">
+              <div class="col-md-3">
+                <select class="form-control" formControlName="type">
+                  <option value="" selected disabled>Selecione*</option>
+                  <option *ngFor="let type of types" [value]="type">
+                    {{type | typeContact}}
+                  </option>
+                </select>
+                <app-error-message-form [formControlGroup]="control | formGroup" [control]="'type'"></app-error-message-form>
+              </div>
+              <div [ngClass]="{'col-md-2' : control?.value?.type === 'office', 'col-md-4' : control?.value?.type !== 'office' }">
+                <input type="text" class="form-control"
+                       formControlName="contactNo"
+                       mask="(000) 000-0000"
+                       placeholder="(999) 999-9999*">
+                <app-error-message-form [formControlGroup]="control | formGroup" [control]="'contactNo'"></app-error-message-form>
+              </div>
+              <div class="col-md-2" *ngIf="control?.value?.type === 'office'">
+                <input type="text" class="form-control" formControlName="extNo" placeholder="Ext.">
+              </div>
+              <div class="col-md-3 my-auto">
+                <div class="checkbox checkbox-primary-{{i}} p-t-0">
+                  <input id="checkbox-isPrimary-{{i}}" type="checkbox" formControlName="isPrimary">
+                  <label for="checkbox-isPrimary-{{i}}"> Principal </label>
+                </div>
+              </div>
+              <a class="text-danger cursor-pointer align-self-start" (click)="deleteContact(i)">
+                <i class="fa fa-times"></i>
+              </a>
+            </div>
+          </ng-container>
+        </ng-container>
+        <div class="text-center m-b-20">
+          <button type="button" class="btn btn-danger" (click)="addContact()">
+            <i class="ti-plus text"></i>
+          </button>
+        </div>
+
+        <ng-container formArrayName="emails">
+          <ng-container *ngFor="let control of emailsArr.controls; let i = index">
+            <div class="row justify-content-center m-b-10" [formGroup]="control | formGroup">
+              <div class="col-md-7">
+                <input type="text" class="form-control" formControlName="email" placeholder="Correo Electronico*">
+                <app-error-message-form [formControlGroup]="control | formGroup" [control]="'email'"></app-error-message-form>
+              </div>
+              <div class="col-md-3 my-auto">
+                <div class="checkbox checkbox-primary-{{i}} p-t-0">
+                  <input id="checkbox-isPrimary-{{i}}" type="checkbox" formControlName="isPrimary">
+                  <label for="checkbox-isPrimary-{{i}}"> Principal </label>
+                </div>
+              </div>
+              <a class="text-danger cursor-pointer align-self-start" (click)="deleteEmail(i)">
+                <i class="fa fa-times"></i>
+              </a>
+            </div>
+          </ng-container>
+        </ng-container>
+        <div class="text-center">
+          <button type="button" class="btn btn-danger" (click)="addEmail()">
+            <i class="ti-plus text"></i>
+          </button>
+        </div>
+
+      </div>
+    </form>
+    <ng-container *ngIf="form.controls['contacts'].hasError('noContact')">
+      <span class="text-danger">Agregue almenos un número de contacto</span>
+    </ng-container>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-primary waves-effect" data-dismiss="modal" (click)="accept()">Guardar</button>
+    <button type="button" class="btn btn-default waves-effect" data-dismiss="modal" (click)="cancel()">Cancelar</button>
+  </div>
+</div>

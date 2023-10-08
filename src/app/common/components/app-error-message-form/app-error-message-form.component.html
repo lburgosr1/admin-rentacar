@@ -1,0 +1,15 @@
+<div *ngFor="let error of errorMessages">
+	<ng-container
+		*ngIf="
+			abstractControl?.hasError(error.type) &&
+			(abstractControl?.dirty || abstractControl?.touched)
+		">
+		<small class="text-danger">El Campo {{controlName}} {{ error.message }}</small>
+	</ng-container>
+	<ng-container
+		*ngIf="(control && formControlGroup.controls[control]?.hasError(error.type) &&
+    (formControlGroup.controls[control]?.dirty || formControlGroup.controls[control]?.touched))
+		">
+		<small class="text-danger">El Campo {{controlName}} {{ error.message }}</small>
+	</ng-container>
+</div>

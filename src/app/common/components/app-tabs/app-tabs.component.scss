@@ -1,0 +1,121 @@
+:host {
+  display: block;
+}
+
+.active {
+  border-top: initial !important;
+  margin-bottom: -5px !important;
+}
+
+.nav-tabs {
+  border-bottom: 1px solid #ddd !important;
+}
+
+.ng-isolate-scope.active .ng-binding {
+  margin-right: 0 !important;
+  margin-bottom: 5px !important;
+}
+
+.nav-item-vertical {
+  padding-left: 20px !important;
+  padding-bottom: 10px !important;
+  padding-top: 10px !important;
+  border-bottom: 1px solid lightgray !important;
+  line-height: 42px !important;
+}
+
+.active-vertical {
+  border-left: 5px solid #398bf7 !important;
+  .nav-item-vertical {
+    padding-left: 15px !important;
+    background: white !important;
+    color: #398bf7 !important;
+    font-weight: 700 !important;
+  }
+}
+
+.nav-item-vertical-unvisited {
+  color: #8c8c8ca1 !important;
+  font-weight: 600 !important;
+}
+
+.nav-item-vertical-visited {
+  cursor: pointer !important;
+  color: black !important;
+  font-weight: 70 !important;
+}
+
+.nav-tabs-horizontal {
+  margin-bottom: -1px !important;
+  z-index: 1;
+  background-color: white;
+  /* margin-left: 10px;
+  margin-right: 10px; */
+  display: flex;
+  width: 100%;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+
+.item-active-horizontal {
+  border-bottom: 5px solid #398bf7;
+}
+
+.nav-tabs-horizontal a {
+  font-size: 15px;
+}
+
+.item-active-horizontal a {
+  color: #398bf7;
+}
+
+.display-inline-flex {
+  display: inline-flex;
+}
+
+.no-wrap {
+  white-space: nowrap;
+}
+
+.hideIcon {
+  position: absolute;
+}
+.visibility-hidden {
+  z-index: 0;
+  position: relative;
+  width: 20px;
+}
+
+@media only screen and (max-width: 768px) {
+  .hideName {
+    display: none;
+  }
+  .auto-width {
+    width: 20px;
+    z-index: 1;
+  }
+  .auto-width:hover {
+    width: 125px !important;
+    float: none !important;
+    position: absolute !important;
+    display: block !important;
+    background-color: white !important;
+    z-index: 500 !important;
+    .visibility-hidden{
+      position: relative !important;
+    }
+  }
+  .absolute-hover:hover {
+    position: absolute !important;
+  }
+}
+
+@media only screen and (min-width: 769px) {
+  .hideIcon {
+    display: none !important;
+  }
+  .visibility-hidden{
+    display: none;
+  }
+}
+

@@ -1,0 +1,67 @@
+<app-navegation
+ [buttonName]="'Guardar'"
+ (whenSave)="onSave($event)"
+ [btnHidden]="btnHidden">
+</app-navegation>
+<ng-container *ngIf="isEdit">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <app-tabs [tabs]="tabs" [vertical]="!isEdit" [activeTabIndex]="activeTabIndex"
+          (whenClickTab)="tabNavigation($event)">
+        </app-tabs>
+        <div class="p-3">
+          <router-outlet></router-outlet>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>
+<ng-container *ngIf="!isEdit">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header bg-white">
+          <div class="d-flex justify-content-end">
+            <button class="btn waves-effect waves-light btn-outline-secondary btn-sm"
+                    (click)="goToTab()">
+              <i class="fa fa-chevron-left me-2"></i>
+              Anterior
+            </button>
+            <button type="button"
+                    class="btn btn-primary ml-2 btn-sm"
+                    (click)="validateAndGoStep()">
+              Próximo
+              <i class="fa fa-chevron-right ms-2"></i>
+            </button>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-2 pr-0">
+            <app-tabs [tabs]="tabs" [vertical]="!isEdit" [activeTabIndex]="activeTabIndex"
+              (whenClickTab)="tabNavigation($event)">
+            </app-tabs>
+          </div>
+          <div class="col-md-10 pl-0">
+            <router-outlet></router-outlet>
+          </div>
+        </div>
+        <div class="card-footer">
+          <div class="d-flex justify-content-end">
+            <button class="btn waves-effect waves-light btn-outline-secondary btn-sm"
+                    (click)="goToTab()">
+              <i class="fa fa-chevron-left me-2"></i>
+              Anterior
+            </button>
+            <button type="button"
+                    class="btn btn-primary ml-2 btn-sm"
+                    (click)="validateAndGoStep()">
+              Próximo
+              <i class="fa fa-chevron-right ms-2"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>

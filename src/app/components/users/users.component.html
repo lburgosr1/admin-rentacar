@@ -1,0 +1,100 @@
+<div class="row animated fadeInDown">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+        <button class="btn btn-success btn-sm" (click)="newUser()">
+          <i class="fa fa-save"></i>
+          Nuevo Usuario
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row animated fadeInRight">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-6 col-lg-4 col-sm-12">
+            <div class="input-group">
+              <input type="search" class="form-control bg-transparent py-2" placeholder="Buscar..."
+                [(ngModel)]="txtTerm" (keyup.enter)="search()">
+              <button (click)="clearSearch()" class="btn btn-outline-secondary border-0 shadow-none btn-pos"
+                type="button">
+                <i class="fa fa-times"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="table-responsive">
+          <table class="table table-striped table-bordered mt-3">
+            <thead>
+              <tr>
+                <th class="w-100-px text-center">Imagen</th>
+                <th>Correo</th>
+                <th>Nombres</th>
+                <th>Apellidos</th>
+                <th class="w-140-px">Role</th>
+                <th class="w-100-px">Auth</th>
+                <th class="text-nowrap w-100-px"></th>
+              </tr>
+            </thead>
+            <ng-container *ngIf="!(isLoading | async)">
+              <tbody>
+                <tr *ngFor="let user of users">
+                  <td class="text-center">
+                    <img [src]="user.imageUser" alt="Imagen de Usuario" class="avatar">
+                  </td>
+                  <td>{{user.email}}</td>
+                  <td>{{user.firstName}}</td>
+                  <td>{{user.lastName}}</td>
+                  <td>
+                    <select class="form-control" [(ngModel)]="user.role" (change)="changeRole(user)">
+                      <option [value]="typeRole.Admin">Admin</option>
+                      <option [value]="typeRole.User">User</option>
+                    </select>
+                  </td>
+                  <td>
+                    <span *ngIf="user.google" class="label label-danger">Google</span>
+                    <span *ngIf="!user.google" class="label label-info">Email</span>
+                  </td>
+                  <td class="text-center">
+                    <div class="btn-group dropleft">
+                      <div data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" aria-hidden="true">
+                        <a class="option-table">
+                          <i class="fa fa-ellipsis-v action-expand fa-lg"></i>
+                        </a>
+                      </div>
+
+                      <div class="dropdown-menu">
+                        <a class="dropdown-item">
+                          <i class="fa fa-close me-2"></i>
+                          Eliminar
+                        </a>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </ng-container>
+          </table>
+        </div>
+        <ng-container *ngIf="(isLoading | async)">
+          <ngx-skeleton-loader count="5" [theme]="{height: '46px'}"></ngx-skeleton-loader>
+        </ng-container>
+        <div class="row">
+          <div class="col-8">
+            <h5 class="card-title">Total Registros {{pagination.totalRecord}}</h5>
+          </div>
+          <div class="col btn-toolbar justify-content-end">
+            <pagination [totalItems]="pagination.totalRecord" [(ngModel)]="urlParams.page"
+              (pageChanged)="pageChanged($event)" [itemsPerPage]="pagination.count" [maxSize]="pagination.maxSize"
+              [boundaryLinks]="true" previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;">
+            </pagination>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

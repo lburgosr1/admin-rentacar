@@ -1,0 +1,114 @@
+<section class="border" [ngClass]="{'skeleton': isLoading | async}">
+  <div class="card-body p-b-0" [hidden]="!urlParams.isEdit">
+    <h4 class="card-title skeleton">Detalles Del Cliente</h4>
+    <h6 class="card-subtitle">{{customer ? customer.fullName : ''}}</h6>
+  </div>
+  <hr [hidden]="!urlParams.isEdit" />
+  <div class="p-20">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="card border">
+          <div class="card-header">
+            <h5>General</h5>
+          </div>
+          <div class="card-body">
+            <form class="form" [formGroup]="form">
+              <div class="form-group">
+                <label for="exampleInputuname">Nombres</label>
+                <div class="input-group">
+                  <div class="input-group-addon" [ngClass]="{'invalid': isValidForm(form.controls['firstName']), '': isValidForm(form.controls['firstName'])}"><i class="ti-user"></i></div>
+                  <input type="text" class="form-control" [ngClass]="{'invalid': isValidForm(form.controls['firstName']), '': isValidForm(form.controls['firstName'])}" id="exampleInputuname" placeholder="Nombres"
+                    formControlName="firstName">
+                </div>
+                <app-error-message-form [abstractControl]="form.controls['firstName']" [controlName]="'Nombres'"></app-error-message-form>
+              </div>
+              <div class="form-group">
+                <label for="exampleInputuname">Apellidos</label>
+                <div class="input-group">
+                  <div class="input-group-addon" [ngClass]="{'invalid': isValidForm(form.controls['lastName']), '': isValidForm(form.controls['lastName'])}"><i class="ti-user"></i></div>
+                  <input type="text" class="form-control" [ngClass]="{'invalid': isValidForm(form.controls['lastName']), '': isValidForm(form.controls['lastName'])}" id="exampleInputuname" placeholder="Apellidos"
+                    formControlName="lastName">
+                </div>
+                <app-error-message-form [abstractControl]="form.controls['lastName']" [controlName]="'Apellidos'"></app-error-message-form>
+              </div>
+              <div class="form-group">
+                <label class="control-label">Tipo de Documento</label>
+                <div class="form-check">
+                  <label class="custom-control custom-radio">
+                    <input id="personalID" value="personalID" name="typeDocument" type="radio"
+                      formControlName="typeDocument" class="custom-control-input">
+                    <span class="custom-control-indicator"></span>
+                    <span class="custom-control-description">Cedula</span>
+                  </label>
+                  <label class="custom-control custom-radio">
+                    <input id="rnc" value="rnc" name="typeDocument" type="radio" formControlName="typeDocument"
+                      class="custom-control-input">
+                    <span class="custom-control-indicator"></span>
+                    <span class="custom-control-description">RNC</span>
+                  </label>
+                  <label class="custom-control custom-radio">
+                    <input id="passport" value="passport" name="typeDocument" type="radio"
+                      formControlName="typeDocument" class="custom-control-input">
+                    <span class="custom-control-indicator"></span>
+                    <span class="custom-control-description">Passaporte</span>
+                  </label>
+                </div>
+              </div>
+              <div class="form-group" *ngIf="form.get('typeDocument')?.value === 'personalID'">
+                <label for="exampleInputuname">Cedula</label>
+                <div class="input-group">
+                  <div class="input-group-addon" [ngClass]="{'invalid': isValidForm(form.controls['document']), '': isValidForm(form.controls['document'])}">
+                    <i class="fa fa-id-card-o"></i>
+                  </div>
+                  <input type="text" class="form-control" id="exampleInputuname" placeholder="Cedula"
+                    formControlName="document" mask="000-0000000-0" [ngClass]="{'invalid': isValidForm(form.controls['document']), '': isValidForm(form.controls['document'])}">
+                </div>
+                <app-error-message-form [abstractControl]="form.controls['document']" [controlName]="'Documento'"></app-error-message-form>
+              </div>
+              <div class="form-group" *ngIf="form.get('typeDocument')?.value === 'rnc'">
+                <label for="exampleInputuname">RNC</label>
+                <div class="input-group">
+                  <div class="input-group-addon" [ngClass]="{'invalid': isValidForm(form.controls['document']), '': isValidForm(form.controls['document'])}">
+                    <i class="fa fa-id-card-o"></i>
+                  </div>
+                  <input type="text" class="form-control" id="exampleInputuname" placeholder="RNC"
+                    formControlName="document" mask="000-00000-0" [ngClass]="{'invalid': isValidForm(form.controls['document']), '': isValidForm(form.controls['document'])}">
+                </div>
+                <app-error-message-form [abstractControl]="form.controls['document']" [controlName]="'Documento'"></app-error-message-form>
+              </div>
+              <div class="form-group" *ngIf="form.get('typeDocument')?.value === 'passport'">
+                <label for="exampleInputuname">Passaporte</label>
+                <div class="input-group">
+                  <div class="input-group-addon" [ngClass]="{'invalid': isValidForm(form.controls['document']), '': isValidForm(form.controls['document'])}">
+                    <i class="fa fa-id-card-o"></i>
+                  </div>
+                  <input type="text" class="form-control" id="exampleInputuname" placeholder="Passaporte"
+                    formControlName="document" [ngClass]="{'invalid': isValidForm(form.controls['document']), '': isValidForm(form.controls['document'])}">
+                </div>
+                <app-error-message-form [abstractControl]="form.controls['document']" [controlName]="'Documento'"></app-error-message-form>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card border">
+          <div class="card-header">
+            <h5>Contactos y Dirección</h5>
+          </div>
+          <div class="card-body">
+            <div class="mb-4">
+              <app-contact [contacts]="this.customer.contacts" (onEditOrNew)="editOrNew($event)"
+                (onDelete)="deleteContact($event)">
+              </app-contact>
+            </div>
+            <div>
+              <app-address [addresses]="this.customer.addresses" (onEditOrNew)="onEditOrNewAddress($event)"
+                (onDelete)="deleteAddress($event)"></app-address>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

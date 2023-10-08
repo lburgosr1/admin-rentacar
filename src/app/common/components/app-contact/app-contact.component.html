@@ -1,0 +1,78 @@
+<div class="d-flex m-b-20">
+  <h4 class="mb-0">Contactos</h4>
+  <ng-container *ngIf="isCompany || (contacts && !contacts.length)">
+    <button type="button" class="btn btn-success btn-sm ml-auto" (click)="editOrNewContact()">
+      <i class="fa fa-plus"></i> Agregar
+    </button>
+  </ng-container>
+</div>
+<ng-container *ngIf="contacts && contacts.length === 0">
+  <h4 class="mb-0 text-center">No Existen Registros</h4>
+</ng-container>
+
+<ng-container *ngIf="contacts && contacts.length > 0">
+  <div *ngFor="let contact of contacts; let i=index" [ngClass]="{'skeleton': isLoading | async}">
+    <div [ngClass]="{'scroll': contact.isCollapsed, '': !contact.isCollapsed}">
+    <div class="card">
+        <div class="card-header">
+          <h2 class="mb-0 d-flex align-items-center">
+            <button class="btn btn-link btn-block text-left" type="button" (click)="collapsedContact(i)">
+              <h6 *ngIf="isCompany">{{contact.firstName}} {{contact.lastName}} {{contact && contact?.department ? '('+contact.department+')' : ''}}</h6>
+              <h6 *ngIf="!isCompany">Datalles</h6>
+            </button>
+            <a class="f-z-0-8 cursor" data-toggle="tooltip" title="Editar" (click)="editOrNewContact(contact)">
+              <i class="fa fa-pencil-square-o text-inverse m-r-10"></i>
+            </a>
+            <a class="f-z-0-8 cursor" data-toggle="tooltip" title="Eliminar" (click)="deleteContact(contact)">
+              <i class="fa fa-trash-o text-inverse m-r-10"></i>
+            </a>
+          </h2>
+        </div>
+        <div class="card-body" id="collapseEvent" [isAnimated]="true" [collapse]="!contact.isCollapsed">
+
+          <ng-container *ngIf="contact.contacts.length">
+            <h5 class="card-title">Numeros de Contactos</h5>
+            <ul class="list-group" *ngFor="let phone of contact.contacts">
+              <li class="list-group-item">
+                <h6>{{translateTypeContact(phone.type)}}</h6>
+                <ul class="font-weight-bold">
+                  <li>
+                    <div class="row">
+                      <div class="col-md-10">
+                        {{phone.contactNo | mask: '(000) 000-0000'}} {{phone?.extNo ? ' Exp.: '+phone.extNo : ''}}
+                      </div>
+                      <div class="col-md-2">
+                        <i *ngIf="phone.isPrimary" class="fa fa-star text-info f-s-20"></i>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </ng-container>
+
+          <ng-container *ngIf="contact.emails.length">
+            <h5 class="card-title mt-4">Correos Electronicos</h5>
+            <ul class="list-group" *ngFor="let email of contact.emails">
+              <li class="list-group-item">
+                <ul class="font-weight-bold">
+                  <li>
+                    <div class="row">
+                      <div class="col-md-10">
+                        {{email.email}}
+                      </div>
+                      <div class="col-md-2">
+                        <i *ngIf="email.isPrimary" class="fa fa-star text-info f-s-20"></i>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </ng-container>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>

@@ -1,0 +1,55 @@
+.skeleton {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  select,
+  button,
+  input,
+  option,
+  span,
+  label,
+  i,
+  a,
+  p,
+  strong,
+  small,
+  select,
+  textarea,
+  ul,
+  li,
+  .skeleton-container {
+    animation: skeleton-loading 1s linear infinite alternate;
+    border-radius: 0;
+    box-shadow: none;
+    background-image: none !important;
+    pointer-events: none;
+  }
+  ::placeholder {
+    opacity: 0;
+  }
+
+  .skeleton-container {
+    border-radius: "5px";
+    height: 150px;
+    border: 1px solid white;
+  }
+}
+@keyframes skeleton-loading {
+  0% {
+    background-color: hsl(200, 20%, 90%);
+    color: hsl(200, 20%, 90%);
+    border-color: hsl(200, 20%, 90%);
+  }
+  100% {
+    background-color: hsl(200, 20%, 98%);
+    color: hsl(200, 20%, 98%);
+    border-color: hsl(200, 20%, 98%);
+  }
+}
+
+.skeleton-td {
+  height: "48px";
+}

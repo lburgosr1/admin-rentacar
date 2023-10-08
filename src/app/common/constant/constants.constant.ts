@@ -1,0 +1,17 @@
+export const COLORS = [
+  'Amarillo',
+  'Azul',
+  'Blanco',
+  'Crema',
+  'Dorado',
+  'Gris',
+  'Marrón',
+  'Morado',
+  'N/D',
+  'Naranja',
+  'Negro',
+  'Plateado',
+  'Rojo',
+  'Rosado',
+  'Verde',
+];
