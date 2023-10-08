@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ISubMenu } from 'src/app/common/interfaces/menu.interface';
+import { IMenu, ISubMenu } from 'src/app/common/interfaces/menu.interface';
 import { SidebarService } from 'src/app/common/services/sidebar.service';
 
 @Component({
@@ -9,9 +9,15 @@ import { SidebarService } from 'src/app/common/services/sidebar.service';
 })
 export class DashboardComponent implements OnInit {
 
-  constructor(public sidebarService: SidebarService) {}
+  items: IMenu[] = [];
+
+  constructor(public sidebarService: SidebarService) { }
 
   ngOnInit(): void {
+    for (const item of this.sidebarService.menu) {
+      if (item.title !== 'Dashboard') {
+        this.items.push(item)
+      }
+    }
   }
-
 }
