@@ -1,25 +1,31 @@
-import { Component, NgZone, OnInit } from '@angular/core';
+import { Component, ElementRef, NgZone, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { FacadeService } from 'src/app/common/services/facade.service';
 import { UserService } from 'src/app/common/services/user.service';
+import { BaseComponent } from '../../base.component';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent extends BaseComponent implements OnInit {
 
   loginForm: any;
   formSubmitted = false;
-  loading = false;
 
-  constructor(private fb: FormBuilder,
-              private userService: UserService,
-              private toastr: ToastrService,
-              private router: Router,
-              private ngZone: NgZone){}
+  constructor(
+    private fb: FormBuilder,
+    private userService: UserService,
+    private toastr: ToastrService,
+    private router: Router,
+    facadeServise: FacadeService,
+    elementRef: ElementRef
+  ){
+    super(facadeServise, elementRef);
+  }
 
   ngOnInit(): void {
     this.initLoginForm();
@@ -27,7 +33,7 @@ export class LoginComponent implements OnInit {
 
   initLoginForm(): void {
     this.loginForm = this.fb.group({
-      email: [ localStorage.getItem('email') || '', Validators.required],
+      userName: [ localStorage.getItem('userName') || '', Validators.required],
       password: ['', Validators.required],
       remember: [localStorage.getItem('remember') || false]
     });
@@ -40,19 +46,23 @@ export class LoginComponent implements OnInit {
       return;
     }
 
+    this.startLoading();
+
     this.userService.login(this.loginForm.value).subscribe({
       next: (res) => {
         if(this.loginForm.get('remember').value) {
-          localStorage.setItem('email', this.loginForm.get('email').value);
+          localStorage.setItem('userName', this.loginForm.get('userName').value);
           localStorage.setItem('remember', this.loginForm.get('remember').value);
         } else {
-          localStorage.removeItem('email');
+          localStorage.removeItem('userName');
           localStorage.removeItem('remember');
         }
         this.router.navigateByUrl('/');
+        this.finishLoading();
       },
       error: (err) => {
         this.toastr.error(err?.error?.msg);
+        this.finishLoading();
       }
     })
   }

@@ -1,4 +1,3 @@
-import { IContact, ICustomerContact, IEmail } from "../interfaces/contact.interface";
 import { User } from "./user.model";
 
 export class Customer {
@@ -8,10 +7,14 @@ export class Customer {
     public lastName: string,
     public document: string,
     public user: User | string,
-    public contacts: ICustomerContact[],
-    public addresses: any[],
+    public phone: string,
+    public address: string,
     public customer_id: string,
-    public typeDocument: string
+    public typeDocument: string,
+    public email: string,
+    public status: boolean,
+    public employee: string,
+    public _id?: string,
   ) {}
 
   get fullName(): string {

@@ -1,10 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { UserService } from 'src/app/common/services/user.service';
 import { BaseComponent } from '../../base.component';
 import { FacadeService } from 'src/app/common/services/facade.service';
+import { ValidatorService } from 'src/app/common/services/validator.service';
+import { UserNameValidatorService } from 'src/app/common/services/user-name-validator.service';
 
 @Component({
   selector: 'app-register',
@@ -16,13 +18,18 @@ export class RegisterComponent extends BaseComponent {
   registerForm: any;
   formSubmitted = false;
 
-  constructor(private fb: FormBuilder,
-              private userService: UserService,
-              private toastr: ToastrService,
-              private router: Router,
-              facadeService: FacadeService){
-                super(facadeService)
-              }
+  constructor(
+    private fb: FormBuilder,
+    private userService: UserService,
+    private toastr: ToastrService,
+    private router: Router,
+    private userNameValidator: UserNameValidatorService,
+    private validatorService: ValidatorService,
+    facadeService: FacadeService,
+    elementRef: ElementRef
+  ) {
+    super(facadeService, elementRef)
+  }
 
   ngOnInit(): void {
     this.initRegisterForm();
@@ -32,25 +39,25 @@ export class RegisterComponent extends BaseComponent {
     this.registerForm = this.fb.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
-      email: ['', Validators.required],
+      userName: ['', Validators.required, [this.userNameValidator]],
       password: ['', Validators.required],
       password2: ['', Validators.required],
       terms: [false, Validators.required]
     }, {
-      validators: this.samePasswords('password', 'password2')
+      validators:  [this.validatorService.similarFormFields('password', 'password2')]
     });
   }
 
   createUser(): void {
     this.formSubmitted = true;
 
-    if(this.registerForm.invalid) {
+    if (this.registerForm.invalid) {
       return;
     }
 
     this.userService.createUser(this.registerForm.value).subscribe({
       next: (response) => {
-        this.router.navigateByUrl('/');
+        this.goBack();
       },
       error: (err) => {
         this.toastr.error(err?.error?.msg);
@@ -59,7 +66,7 @@ export class RegisterComponent extends BaseComponent {
   }
 
   invalidField(field: string): boolean {
-    if(this.registerForm.get(field).invalid && this.formSubmitted) {
+    if (this.registerForm.get(field).invalid && this.formSubmitted) {
       return true;
     } else {
       return false;
@@ -70,25 +77,10 @@ export class RegisterComponent extends BaseComponent {
     const pass1 = this.registerForm.get('password').value;
     const pass2 = this.registerForm.get('password2').value;
 
-    if((pass1 !== pass2) && this.formSubmitted) {
+    if ((pass1 !== pass2) && this.formSubmitted) {
       return true;
     } else {
       return false;
-    }
-  }
-
-  samePasswords(pass1: string, pass2: string) {
-
-    return (formGroup: FormGroup) => {
-
-      const pass1Control = formGroup.get(pass1);
-      const pass2Control = formGroup.get(pass2);
-
-      if(pass1Control?.value === pass2Control?.value) {
-        pass1Control?.setErrors(null);
-      } else {
-        pass2Control?.setErrors({isNotSame: true})
-      }
     }
   }
 }

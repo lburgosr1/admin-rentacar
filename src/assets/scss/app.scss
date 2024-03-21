@@ -21,13 +21,13 @@ File: scss
 
 @import url('https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700');
 
-/******************* 
-Global Styles 
+/*******************
+Global Styles
 *******************/
 
 * {
     outline: none;
-    
+
 }
 
 body {
@@ -37,7 +37,7 @@ body {
     overflow-x: hidden;
     color: $bodytext;
     font-weight: 300;
-    
+
 }
 
 html {
@@ -45,7 +45,7 @@ html {
     min-height: 100%;
     background: $white;
     -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale; 
+    -moz-osx-font-smoothing: grayscale;
 }
 
 a:hover,
@@ -867,4 +867,31 @@ Layouts
     width: 100%;
     max-width: 1170px;
     margin: 0 auto;
+}
+
+.dropdown-search {
+  position: absolute;
+  overflow-y: scroll;
+  z-index: 9999;
+  background: #fff;
+  line-height: 2rem;
+  border: 1px solid rgba(0,0,0,.15);
+  border-radius: 0.25rem;
+  padding: 0.;
+  font-weight: normal;
+  display: block;
+  min-height: 1.2em;
+  white-space: nowrap;
+  vertical-align: middle;
+  width: 90%;
+  max-height: 160px;
+}
+
+.dropdown-search-items {
+  padding: 0 5px;
+}
+
+.dropdown-search-items:hover {
+  background: #398bf7;
+  color: #fff;
 }

@@ -23,9 +23,11 @@ const customInitFunctions = () => {
             if (width < 1170) {
                 $("body").addClass("mini-sidebar");
                 $('.navbar-brand span').hide();
+                $('.navbar-brand b').show();
                 $(".sidebartoggler i").addClass("ti-menu");
             } else {
                 $("body").removeClass("mini-sidebar");
+                $('.navbar-brand b').hide();
                 $('.navbar-brand span').show();
             }
 
@@ -47,11 +49,13 @@ const customInitFunctions = () => {
             if ($("body").hasClass("mini-sidebar")) {
                 $("body").trigger("resize");
                 $("body").removeClass("mini-sidebar");
+                $('.navbar-brand b').hide();
                 $('.navbar-brand span').show();
 
             } else {
                 $("body").trigger("resize");
                 $("body").addClass("mini-sidebar");
+                $('.navbar-brand b').show();
                 $('.navbar-brand span').hide();
 
             }

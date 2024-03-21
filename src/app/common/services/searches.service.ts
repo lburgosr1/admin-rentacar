@@ -4,6 +4,9 @@ import { map, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { User } from '../models/user.model';
 import { SEARCH_URL } from '../constant/api-url.constant';
+import { Customer } from '../models/cusotmer.model';
+import { Document } from '../models/document.model';
+import { Vehicle } from '../models/vehicle.model';
 
 const baseUrl = environment.base_url;
 
@@ -34,7 +37,7 @@ export class SearchesService {
 
   private transformUsers(result: any[]): User[] {
     return result.map(
-      user => new User(user.firstName, user.lastName, user.email, '', user.image, user.role, user.google, user.userId)
+      user => new User(user.firstName, user.lastName, user.userName, '', user.image, user.role, user.google, user.userId)
     );
   }
 
@@ -46,14 +49,16 @@ export class SearchesService {
           switch (type) {
             case 'user':
               return this.transformUsers(resp.result);
+            case 'customer':
+              return resp.result as Customer[];
+            case 'document':
+              return resp.result as Document[];
+            case 'vehicle':
+              return resp.result as Vehicle[];
             default:
               return [];
           }
         })
       )
-  }
-
-  deleteUser(): void {
-
   }
 }

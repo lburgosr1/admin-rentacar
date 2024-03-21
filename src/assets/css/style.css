@@ -63,12 +63,12 @@ Global Styles
 
 body {
   background: #fff;
-  /*font-family: "Montserrat", sans-serif;*/
-  font-family: "Arial", sans-serif !important;
+  font-family: "Montserrat", sans-serif;
+  /* font-family: "Arial", sans-serif !important; */
   margin: 0;
   overflow-x: hidden;
-  /* color: #67757c; */
-  color: #000000;
+  color: #67757c;
+  /* color: #000000; */
   font-weight: 400;
   letter-spacing: 0.5px !important;}
 
@@ -847,7 +847,7 @@ sidebar navigation
     color: #555f6d; }
   .sidebar-nav > ul > li > a .label {
     float: right;
-    margin-top: 6px; }
+    /* margin-top: 6px; */ }
   .sidebar-nav > ul > li > a.active {
     font-weight: 400;
     background: #ffffff;

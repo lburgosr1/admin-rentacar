@@ -4,12 +4,41 @@
 			abstractControl?.hasError(error.type) &&
 			(abstractControl?.dirty || abstractControl?.touched)
 		">
-		<small class="text-danger">El Campo {{controlName}} {{ error.message }}</small>
+		<small [hidden]="error.type === 'documentTaken' ||
+           error.type === 'emailTaken' ||
+           error.type === 'userNameTaken' ||
+           error.type === 'noEquals' ||
+           error.type === 'wrongDate' ||
+           error.type === 'pattern'"
+           class="text-danger">
+           El campo {{controlName}} {{ error.message ? error.message : inputMessage }}
+    </small>
+		<small [hidden]="error.type !== 'documentTaken'" class="text-danger">{{ error.message }}</small>
+		<small [hidden]="error.type !== 'emailTaken'" class="text-danger">{{ error.message }}</small>
+		<small [hidden]="error.type !== 'userNameTaken'" class="text-danger">{{ error.message }}</small>
+		<small [hidden]="error.type !== 'noEquals'" class="text-danger">{{ error.message }}</small>
+    <small [hidden]="error.type !== 'pattern'" class="text-danger">{{ error.message }} {{controlName}} es incorrecto</small>
+    <small [hidden]="error.type !== 'pattern'" class="text-danger">{{ error.message }} {{controlName}} es incorrecto</small>
+    <small [hidden]="error.type !== 'wrongDate'" class="text-danger">La fecha {{controlName}} {{ error.message }} </small>
 	</ng-container>
 	<ng-container
 		*ngIf="(control && formControlGroup.controls[control]?.hasError(error.type) &&
     (formControlGroup.controls[control]?.dirty || formControlGroup.controls[control]?.touched))
 		">
-		<small class="text-danger">El Campo {{controlName}} {{ error.message }}</small>
+		 <small [hidden]="error.type === 'documentTaken' ||
+            error.type === 'emailTaken' ||
+            error.type === 'userNameTaken' ||
+            error.type === 'noEquals' ||
+            error.type === 'pattern' ||
+            error.type === 'wrongDate'"
+            class="text-danger">
+            El campo {{controlName}} {{ error.message ? error.message : inputMessage }}
+     </small>
+		 <small [hidden]="error.type !== 'documentTaken'" class="text-danger">{{ error.message }}</small>
+		 <small [hidden]="error.type !== 'emailTaken'" class="text-danger">{{ error.message }}</small>
+		 <small [hidden]="error.type !== 'userNameTaken'" class="text-danger">{{ error.message }}</small>
+		 <small [hidden]="error.type !== 'noEquals'" class="text-danger">{{ error.message }}</small>
+		 <small [hidden]="error.type !== 'pattern'" class="text-danger">{{ error.message }} {{controlName}} es incorrecto</small>
+		 <small [hidden]="error.type !== 'wrongDate'" class="text-danger">La fecha {{controlName}} {{ error.message }}</small>
 	</ng-container>
 </div>

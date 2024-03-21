@@ -7,20 +7,26 @@ export class CustomerModel {
   public lastName!: string;
   public document!: string;
   public user!: User;
-  public contacts!: ICustomerContact[];
-  public addresses!: any[];
+  public phone!: string;
+  public address!: string;
   public customer_id!: string;
   public typeDocument!: string;
+  public employee!: string;
+  public email!: string;
+  public status!: boolean;
 
   constructor() {
     this.firstName = '',
     this.lastName = '',
     this.document = '',
     this.user = {} as User,
-    this.contacts = [],
-    this.addresses = [],
+    this.phone = '',
+    this.address = '',
     this.customer_id = '',
-    this.typeDocument = 'personalID'
+    this.typeDocument = '',
+    this.employee = '';
+    this.email = '';
+    this.status = true;
   }
 
   get fullName(): string {

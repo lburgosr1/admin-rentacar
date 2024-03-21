@@ -10,7 +10,7 @@ import { User } from '../models/user.model';
 import { IUsersResponse } from '../interfaces/user.interface';
 import { LOGIN_URL, USERS_URL } from '../constant/api-url.constant';
 import { APPROUTES } from '../constant/app-routes.constant';
-import { TypeRoleUser } from '../constant/enums.constant';
+import { TypeRoleUserEnum } from '../constant/enums.constant';
 
 const baseUrl = environment.base_url;
 
@@ -56,6 +56,8 @@ export class UserService {
   logout(): void {
     localStorage.removeItem('token');
     localStorage.removeItem('menu');
+    localStorage.removeItem('customers');
+    localStorage.removeItem('vehicles');
 
     this.ngZone.run(() => {
       this.router.navigateByUrl(APPROUTES.authentication);
@@ -69,9 +71,9 @@ export class UserService {
       }
     }).pipe(
       tap((resp: any) => {
-        const { firstName, lastName, email, image, role, google, user_id } = resp.user;
-        this.user = new User(firstName, lastName, email, '', image, role, google, user_id);
-        if(this.user.role === TypeRoleUser.Admin) {
+        const { firstName, lastName, userName, image, status, role, user_id } = resp.user;
+        this.user = new User(firstName, lastName, userName, '', role, status, image, user_id);
+        if(this.user.role === TypeRoleUserEnum.Admin) {
           this.hiddenForRole.next(false);
         } else {
           this.hiddenForRole.next(true);
@@ -86,7 +88,7 @@ export class UserService {
   handleCredentialResponse(response: any): void {
   }
 
-  uptadeProfile(data: { email: string, name: string, role: string }) {
+  uptadeProfile(data: { userName: string, name: string, role: string }) {
 
     data = {
       ...data,
@@ -110,7 +112,9 @@ export class UserService {
   }
 
   login(formData: ILoginForm): Observable<any> {
-    return this.http.post(`${baseUrl}/login`, formData)
+    const { userName, password } = formData;
+
+    return this.http.post(`${baseUrl}/login`, { userName, password })
       .pipe(
         tap((resp: any) => {
           this.setLocalStorage(resp.token, resp.menu);
@@ -125,7 +129,7 @@ export class UserService {
       .pipe(
         map(resp => {
           const users = resp.users.map(user => new User(
-            user.firstName, user.lastName, user.email, '', user.image, user.role, user.google, user.user_id))
+            user.firstName, user.lastName, user.userName, '', user.role, user.status, user.image, user.user_id))
           return {
             total: resp.total,
             users
@@ -136,7 +140,7 @@ export class UserService {
 
   updateUser(user: User) {
     const url = `${baseUrl}/${USERS_URL.updateUser}/${user.user_id}`;
-    return this.http.put(url, this.headers);
+    return this.http.put(url, user, this.headers);
   }
 
   deleteUser(user: User) {
@@ -144,24 +148,8 @@ export class UserService {
     return this.http.delete(url, this.headers);
   }
 
-  saveUser(user: User) {
-    return this.http.put(`${baseUrl}/${USERS_URL.saveUser}/${user.user_id}`, user, this.headers);
-  }
-
-  getAgents(): Observable<IUsersResponse> {
-
-    const url = `${baseUrl}/${USERS_URL.getUsers}`
-    return this.http.get<IUsersResponse>(url, this.headers)
-      .pipe(
-        map(resp => {
-          const agents = resp.users.map(user => new User(
-            user.firstName, user.lastName, user.email, '', user.image, user.role, user.google, user.user_id));
-          const users = agents.filter(agent => agent.role === TypeRoleUser.Agent);
-          return {
-            total: resp.total,
-            users
-          }
-        })
-      );
+  changeRole(user: User) {
+    const url = `${baseUrl}/${USERS_URL.saveUser}/${user.user_id}`;
+    return this.http.put(url, user, this.headers);
   }
 }

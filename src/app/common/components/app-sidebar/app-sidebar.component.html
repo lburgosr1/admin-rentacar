@@ -25,8 +25,19 @@
               <i [class]="item.icon"></i>
               <span class="hide-menu">
                   {{ item.title }}
+                  <span class="label label-rouded label-themecolor pull-right" *ngIf="item && item.submenu">
+                    {{ item.submenu.length }}
+                </span>
               </span>
           </a>
+          <ul aria-expanded="false" class="collapse">
+            <li *ngFor="let subMenuItem of item.submenu">
+                <a routerLinkActive="active" [routerLink]="subMenuItem.url">
+                  <i *ngIf="subMenuItem.icon" [class]="subMenuItem.icon"></i>
+                  {{ subMenuItem.title }}
+                </a>
+            </li>
+        </ul>
       </li>
 
       </ul>

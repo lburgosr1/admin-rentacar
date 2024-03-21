@@ -22,11 +22,11 @@
             </div>
           </div>
           <div class="form-group">
-            <label for="exampleInputEmail1">Email</label>
+            <label for="exampleInputEmail1">Nombre de Usuario</label>
             <div class="input-group">
-              <div class="input-group-addon"><i class="ti-email"></i></div>
-              <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email"
-                formControlName="email" [readOnly]="user.google">
+              <div class="input-group-addon"><i class="ti-user"></i></div>
+              <input type="userName" class="form-control" id="exampleInputEmail1" placeholder="Email"
+                formControlName="userName">
             </div>
           </div>
           <button type="submit" class="btn btn-primary btn-sm waves-effect waves-light m-r-10">
@@ -52,7 +52,6 @@
           <div class="dropify-errors-container">
             <ul></ul>
           </div><input type="file" id="input-file-now-custom-1" class="dropify" (click)="changeImage($event)">
-          <!-- <button type="button" class="dropify-clear">Remove</button> -->
           <div class="dropify-preview" style="display: block;">
             <span class="dropify-render">
               <img *ngIf="!imgTemp" [src]="user.imageUser">
@@ -67,35 +66,6 @@
             </div>
           </div>
         </div>
-
-        <!-- <div class="text-center mb-4">
-
-          <div class="dropify-wrapper has-preview">
-            <div class="dropify-message"><span class="file-icon"></span>
-              <p>Drag and drop a file here or click</p>
-              <p class="dropify-error">Ooops, something wrong appended.</p>
-            </div>
-            <div class="dropify-loader"></div>
-            <div class="dropify-errors-container">
-              <ul></ul>
-            </div>
-            <input type="file" id="input-file-now" class="dropify" (change)="changeImage($event)">
-            <img *ngIf="!imgTemp" [src]="user.imageUser" class="img-preview">
-            <img *ngIf="imgTemp" [src]="imgTemp" class="img-preview">
-            <div class="dropify-preview"><span class="dropify-render"></span>
-              <div class="dropify-infos">
-                <div class="dropify-infos-inner">
-                  <p class="dropify-filename"><span class="file-icon"></span> <span
-                      class="dropify-filename-inner"></span></p>
-                  <p class="dropify-infos-message">Drag and drop or click to replace</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div> -->
-
-        <!-- <img *ngIf="!imgTemp" [src]="user.imageUser" class="img-preview">
-        <img *ngIf="imgTemp" [src]="imgTemp" class="img-preview"> -->
 
         <br><br>
 

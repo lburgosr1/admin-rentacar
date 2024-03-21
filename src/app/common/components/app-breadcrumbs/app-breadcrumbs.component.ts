@@ -16,7 +16,7 @@ export class AppBreadcrumbsComponent implements OnDestroy {
   constructor(private router: Router ) {
     this.titleSubs$ = this.getRouteDetails().subscribe(({title}) => {
       this.title = title;
-      document.title = `Admin Laundry - ${title}`;
+      document.title = `Admin RentACa - ${title}`;
     })
   }
 

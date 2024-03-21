@@ -1,9 +1,9 @@
 <!-- Main wrapper - style you can find in pages.css -->
 <!-- ============================================================== -->
 <section id="wrapper" class="login-register login-sidebar"
-  style="background-image:url(../../../../assets/images/background/login-register.jpg);">
+  style="background-image:url(../../../../assets/images/background/login-backgound.jpg);">
   <div class="login-box card">
-    <div class="card-body">
+    <div class="card-body my-5">
 
       <form class="form-horizontal form-material"
             id="loginform"
@@ -11,15 +11,15 @@
             autocomplete="off"
             [formGroup]="loginForm">
         <a href="javascript:void(0)" class="text-center db">
-          <img width="106" height="106" src="../../../assets/images/logo-icon.jpg"
+          <img width="250" height="60" src="../../../assets/images/logo-text.png"
             alt="Home" />
         </a>
         <div class="form-group m-t-40">
           <div class="col-xs-12">
             <input class="form-control"
-                    type="email"
-                    placeholder="Email"
-                    formControlName="email">
+                    type="userName"
+                    placeholder="Usuario"
+                    formControlName="userName">
           </div>
         </div>
         <div class="form-group">
@@ -43,7 +43,10 @@
         </div>
         <div class="form-group text-center m-t-20">
           <div class="col-xs-12">
-            <button class="btn btn-primary btn-lg btn-block text-uppercase btn-rounded" type="submit">Iniciar Sessión</button>
+            <button class="btn btn-primary btn-lg btn-block text-uppercase btn-rounded" type="submit">
+              <i class="fa fa-spinner fa-spin" [hidden]="(isLoading$ | async) === false"></i>
+              Iniciar Sessión
+            </button>
           </div>
         </div>
       </form>

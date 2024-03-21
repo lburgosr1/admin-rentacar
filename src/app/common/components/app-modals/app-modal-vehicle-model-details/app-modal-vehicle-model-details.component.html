@@ -1,0 +1,42 @@
+<div class="modal-body">
+  <div class="content-modal">
+    <div class="d-flex">
+      <h3 class="modal-title">
+        {{isEdit ? 'Editar' : 'Nuevo'}} Modelo Vehículo
+      </h3>
+      <div class="ml-auto">
+        <button type="button" class="btn-close close pull-right" (click)="cancel()">
+          <span class="visually-hidden">&times;</span>
+        </button>
+      </div>
+    </div>
+    <div class="modal-body">
+      <form class="form-horizontal form-material" [formGroup]="form">
+        <h6 class="card-subtitle">Marcas</h6>
+        <div class="form-group">
+          <select class="form-control custom-select" formControlName="brand"
+            [ngClass]="{'form-control-danger': brand?.invalid}">
+            <option value="" selected disabled>Selecione*</option>
+            <option *ngFor="let brand of brands" [value]="brand.brand_vehicle_id">
+              {{brand.brandVehicle}}
+            </option>
+          </select>
+          <app-error-message-form [abstractControl]="brand" [controlName]="'Marca'"></app-error-message-form>
+        </div>
+        <div class="form-group">
+          <div class="col-md-12 m-b-20">
+            <input type="text" class="form-control" [ngClass]="{'form-control-danger': vehicleModel?.invalid}"
+              formControlName="vehicleModel" placeholder="Model Vehículo*">
+            <app-error-message-form [abstractControl]="vehicleModel"
+              [controlName]="'Model Vehículo'"></app-error-message-form>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-sm btn-primary waves-effect" data-dismiss="modal"
+        (click)="accept()">Guardar</button>
+      <button type="button" class="btn btn-sm btn-default waves-effect" data-dismiss="modal"
+        (click)="cancel()">Cancelar</button>
+    </div>
+  </div>

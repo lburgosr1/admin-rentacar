@@ -6,6 +6,10 @@ export interface IResponseCustomers {
   ok: boolean;
   total: number;
 };
+export interface IResponseAllCustomers {
+  customers: Customer[];
+  ok: boolean;
+};
 
 export interface IResponseCustomer {
   customer: Customer;

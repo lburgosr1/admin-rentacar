@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef } from '@angular/core';
 import { IRoute } from '../common/interfaces/route.interface';
 import { FacadeService } from '../common/services/facade.service';
 import { BehaviorSubject } from 'rxjs';
@@ -8,18 +8,19 @@ import { AbstractControl, FormGroup } from '@angular/forms';
   selector: 'app-base',
   template: ''
 })
-export class BaseComponent {
+export class BaseComponent<T = any> {
 
   route!: IRoute;
-  isLoading: BehaviorSubject<boolean> = new BehaviorSubject(false);
-  originalModel = {} as any;
+  loading: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  model = {} as T;
+  originalModel = {} as T;
 
-  constructor(public facadeService: FacadeService) {
+  constructor(public facadeService: FacadeService, public elementRef: ElementRef) {
     this.route =  this.facadeService.utils.rebuildRoute(this.facadeService.location.path());
   }
 
   ngOnDestroy(): void {
-    this.isLoading.next(false);
+    this.loading.next(false);
     this.facadeService.utils.whenFormIsValid$.next(false);
   }
 
@@ -28,11 +29,11 @@ export class BaseComponent {
   }
 
   startLoading(): void {
-    this.isLoading.next(true);
+    this.loading.next(true);
   }
 
   finishLoading(): void {
-    this.isLoading.next(false);
+    this.loading.next(false);
   }
 
   goTo(path: string, params?: object, reload?: boolean): void {
@@ -81,4 +82,8 @@ export class BaseComponent {
   get hiddenForRole$() {
     return this.facadeService.user.hiddenForRole$;
   }
+
+  get isLoading$() {
+		return this.loading.asObservable();
+	}
 }

@@ -7,6 +7,7 @@ import { APPROUTES } from './common/constant/app-routes.constant';
 const routes: Routes = [
   { path: APPROUTES.authentication, loadChildren: () => import('./components/auth/auth.module').then(m => m.AuthModule) },
   { path: APPROUTES.register, loadChildren: () => import('./components/auth/register/register.module').then(m => m.RegisterdModule) },
+  { path: APPROUTES.invoice, loadChildren: () => import('./components/invoice/invoice.module').then(m => m.InvoiceModule) },
 
   { path: APPROUTES.empty, loadChildren: () => import('./components/main/main.module').then(m => m.MainModule) },
 

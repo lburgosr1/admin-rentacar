@@ -4,8 +4,10 @@
       <i class="fa fa-chevron-left mr-1"></i>
       Atras
     </button>
-    <button type="button" [disabled]="!isValidForm" [hidden]="btnHidden" class="btn btn-primary btn-sm waves-effect waves-light" (click)="save()">
-      <i class="fa fa-save"></i>
+    <button type="button" [disabled]="!isValidFormNav" [hidden]="btnHidden"
+      class="btn btn-primary btn-sm waves-effect waves-light" (click)="save()">
+      <i class="{{icon ? icon : 'fa fa-save'}}" [hidden]="(isLoading$ | async) === true"></i>
+      <i class="fa fa-spinner fa-spin" [hidden]="(isLoading$ | async) === false"></i>
       {{buttonName}}
     </button>
   </div>

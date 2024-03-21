@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output, OnInit, Input } from '@angular/core';
+import { Component, EventEmitter, Output, OnInit, Input, ElementRef } from '@angular/core';
 import { Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators'
 import { IUrlParams } from '../../constant/url-params';
@@ -13,24 +13,18 @@ import { FacadeService } from '../../services/facade.service';
 export class InputDebounceComponent extends BaseComponent implements OnInit {
 
   @Input() placeholder!: string;
+  @Input() term!: string;
 
   @Output() onEnter: EventEmitter<string> = new EventEmitter();
   @Output() onDebounce: EventEmitter<string> = new EventEmitter();
 
-  term!: string;
   debouncer: Subject<string> = new Subject();
-  paramsUrl = {} as IUrlParams;
 
-  constructor(facadeService: FacadeService) {
-    super(facadeService);
+  constructor(facadeService: FacadeService, elementRef: ElementRef) {
+    super(facadeService, elementRef);
   }
 
   ngOnInit() {
-    this.facadeService.activatedRoute.queryParams.subscribe((params: any) => {
-      this.paramsUrl = this.facadeService.utils.transformParamsObj(params) as IUrlParams;
-      this.paramsUrl ? this.paramsUrl.policy : '';
-    });
-
     this.debouncer
       .pipe(debounceTime(300))
       .subscribe(value => {

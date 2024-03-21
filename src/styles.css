@@ -52,6 +52,37 @@
 }
 /* End Skeleton Loader */
 
+.bs-datepicker-container {
+  padding: 0 !important;
+}
+
+.dropdown-search {
+  position: absolute;
+  overflow-y: scroll;
+  z-index: 9999;
+  background: #fff;
+  line-height: 2rem;
+  border: 1px solid rgba(0,0,0,.15);
+  border-radius: 0.25rem;
+  padding: 0.;
+  font-weight: normal;
+  display: block;
+  min-height: 1.2em;
+  white-space: nowrap;
+  vertical-align: middle;
+  width: 90%;
+  max-height: 160px;
+}
+
+.dropdown-search-items {
+  padding: 0 5px;
+}
+
+.dropdown-search-items:hover {
+  background: #398bf7;
+  color: #fff;
+}
+
 .fast {
   -webkit-animation-duration: 0.3s;
   animation-duration: 0.3s;
@@ -83,6 +114,12 @@
   width: 30px;
   border-radius: 100%;
   border: solid 0.5px lightgray;
+}
+
+.image-vehicle {
+  width: 80px;
+  height: 80px;
+  border-radius: 0;
 }
 
 td .dropdown-menu {

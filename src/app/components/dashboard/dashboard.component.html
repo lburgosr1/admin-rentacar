@@ -1,12 +1,18 @@
-<div class="row">
-  <!-- .col -->
-  <div class="col-md-4 col-lg-4 col-xlg-4 col-sm-12" *ngFor="let item of items">
-    <a routerLinkActive="active" [routerLink]="'/'+item.url">
-      <div class="card card-body">
-        <i *ngIf="item.icon" [class]="item.icon"></i>
-        <h4 class="box-title m-b-0 text-center">{{ item.title }}</h4>
+<section class="animated fadeIn">
+  <div class="row">
+    <!-- .col -->
+    <div class="col-md-4 col-lg-3 col-xlg-3 col-sm-6" *ngFor="let item of items; let i = index">
+      <div class="text-center card widget-mini white">
+        <div class="card-body">
+          <i *ngIf="item.icon" [class]="item.icon"></i>
+          <span class="box-title m-b-0 text-center">
+            <a routerLinkActive="active" class="pl-0 cursor text-capitalize" [routerLink]="'/'+item.url">
+              {{ item.title }}
+            </a>
+          </span>
+        </div>
       </div>
-    </a>
+    </div>
+    <!-- /.col -->
   </div>
-  <!-- /.col -->
-</div>
+</section>

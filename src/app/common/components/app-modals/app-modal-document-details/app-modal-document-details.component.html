@@ -1,0 +1,28 @@
+<div class="modal-body">
+  <div class="content-modal">
+    <div class="d-flex">
+      <h3 class="modal-title">
+        {{isEdit ? 'Editar' : 'Nuevo'}} Documento
+      </h3>
+      <div class="ml-auto">
+        <button type="button" class="btn-close close pull-right" (click)="cancel()">
+          <span class="visually-hidden">&times;</span>
+        </button>
+      </div>
+    </div>
+    <div class="modal-body">
+      <form class="form-horizontal form-material" [formGroup]="form">
+        <div class="form-group">
+          <div class="col-md-12 m-b-20">
+            <input type="text" class="form-control" [ngClass]="{'form-control-danger': typeDocument?.invalid}"
+              formControlName="typeDocument" placeholder="Tipo Documento*">
+            <app-error-message-form [abstractControl]="typeDocument" [controlName]="'Tipo Documento'"></app-error-message-form>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-sm btn-primary waves-effect" data-dismiss="modal" (click)="accept()">Guardar</button>
+      <button type="button" class="btn btn-sm btn-default waves-effect" data-dismiss="modal" (click)="cancel()">Cancelar</button>
+    </div>
+  </div>

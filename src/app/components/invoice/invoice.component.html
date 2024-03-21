@@ -1,0 +1,82 @@
+<div class="logo-container">
+  <img style="height: 40px" src="./assets/images/logo-text.png">
+</div>
+
+<table class="invoice-info-container">
+  <tr>
+    <td rowspan="2" class="client-name">
+      Cliente: {{invoice.firstName}} {{invoice.lastName}}
+    </td>
+    <td>
+      {{invoice.addressCustomer}}
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Santo Domingo, R.D.
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Fecha Factura: <strong>{{invoice.invoiceDate}}</strong>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      No. Factura: <strong>{{invoice.invoiceCode}}</strong>
+    </td>
+    <td>
+      {{invoice.emailCustomer}}
+    </td>
+  </tr>
+</table>
+
+<table class="line-items-container">
+  <thead>
+    <tr>
+      <th>Vehículo</th>
+      <th>Periodo De Renta</th>
+      <th>Precio Por Dia</th>
+      <th>Cantidad De Dias</th>
+      <th>Deposito</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <span>{{invoice.plate}} {{invoice.typeVehicle}}</span>
+        <br>
+        <span>{{invoice.brad}} {{invoice.model}} {{invoice.year}}</span>
+      </td>
+      <td>
+        <span>{{invoice.rentalStartDate}} - {{invoice.rentalEndDate}}</span>
+      </td>
+      <td >${{invoice.pricePerDay}}</td>
+      <td >${{invoice.daysOfRent}}</td>
+      <td >${{invoice.deposit}}</td>
+  </tbody>
+</table>
+
+<table class="line-items-container has-bottom-border">
+  <thead>
+    <tr>
+      <th colspan="3">Sub-Total</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="large total">${{invoice.amount}}</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="footer">
+  <div class="footer-info">
+    <span>mail@rentacar.com</span> |
+    <span>(809) 555 5555</span> |
+    <span>WebSite</span>
+  </div>
+  <div class="footer-thanks">
+    <span>Gracias Pro Preferirnos</span>
+  </div>
+</div>

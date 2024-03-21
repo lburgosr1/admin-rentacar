@@ -1,78 +1,59 @@
 <div class="card-no-border">
-  <section id="wrapper" class="login-register login-sidebar" style="background-image:url(../assets/images/background/login-register.jpg);">
+  <section id="wrapper" class="login-register login-sidebar"
+    style="background-image:url(../assets/images/background/login-register.jpg);">
     <div class="login-box card">
-        <div class="card-body">
-            <form  class="form-horizontal form-material" id="loginform"
-                    (ngSubmit)="createUser()"
-                    autocomplete="off"
-                    [formGroup]="registerForm">
-                <a href="javascript:void(0)" class="text-center db">
-                  <img width="120" height="30" src="../../../assets/images/logo-text.jpg" alt="Home" />
-                </a>
-                <h3 class="box-title m-t-40 m-b-0">Nuevo usuario</h3>
+      <div class="card-body">
+        <form class="form-horizontal form-material" id="loginform" (ngSubmit)="createUser()" autocomplete="off"
+          [formGroup]="registerForm">
+          <a href="javascript:void(0)" class="text-center db">
+            <img width="120" height="30" src="../../../assets/images/logo-text.jpg" alt="Home" />
+          </a>
+          <h3 class="box-title m-t-40 m-b-0">Nuevo usuario</h3>
 
-                <div class="form-group m-t-20">
-                    <div class="col-xs-12">
-                        <input class="form-control"
-                                type="text"
-                                placeholder="Nombres"
-                                formControlName="firstName">
-                    </div>
-                </div>
-                <div class="form-group m-t-20">
-                    <div class="col-xs-12">
-                        <input class="form-control"
-                                type="text"
-                                placeholder="Apellidos"
-                                formControlName="lastName">
-                    </div>
-                </div>
-                <div class="form-group ">
-                    <div class="col-xs-12">
-                        <input class="form-control"
-                                type="text"
-                                placeholder="Email"
-                                formControlName="email">
-                    </div>
-                </div>
-                <div class="form-group ">
-                    <div class="col-xs-12">
-                        <input class="form-control"
-                                type="password"
-                                placeholder="Contraseña"
-                                formControlName="password">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-xs-12">
-                        <input class="form-control"
-                                type="password"
-                                placeholder="Confirmar Contraseña"
-                                formControlName="password2">
-                    </div>
-                </div>
-
-                <div class="row">
-                  <div class="col text-danger">
-                    <p *ngIf="invalidField('firstName')">Campo Nombres Es Requerido</p>
-                    <p *ngIf="invalidField('lastName')">Campo Apellidos Es Requerido</p>
-                    <p *ngIf="invalidField('email')">Campo Email Es Requerido</p>
-                    <p *ngIf="invalidPassword()">Confirme la contraseña</p>
-                  </div>
-                </div>
-
-                <div class="form-group text-center m-t-20">
-                    <div class="col-xs-12">
-                        <button class="btn btn-primary btn-lg btn-block text-uppercase waves-effect waves-light" type="submit">Registrar</button>
-                    </div>
-                </div>
-                <div class="form-group m-b-0">
-                  <div class="col-sm-12 text-center">
-                      <a class="text-info m-l-5 cursor" (click)="goBack()"><b>Volver Atras</b></a>
-                  </div>
-              </div>
-            </form>
-        </div>
+          <div class="form-group m-t-20">
+            <div class="col-xs-12">
+              <input class="form-control" type="text" placeholder="Nombres" formControlName="firstName">
+            </div>
+            <app-error-message-form [abstractControl]="registerForm.controls['firstName'] " [controlName]="'Nombres'"></app-error-message-form>
+          </div>
+          <div class="form-group m-t-20">
+            <div class="col-xs-12">
+              <input class="form-control" type="text" placeholder="Apellidos" formControlName="lastName">
+            </div>
+            <app-error-message-form [abstractControl]="registerForm.controls['lastName'] " [controlName]="'Apellidos'"></app-error-message-form>
+          </div>
+          <div class="form-group ">
+            <div class="col-xs-12">
+              <input class="form-control" type="text" placeholder="Usuario" formControlName="userName">
+            </div>
+            <app-error-message-form [abstractControl]="registerForm.controls['userName'] " [controlName]="'Usuario'"></app-error-message-form>
+          </div>
+          <div class="form-group ">
+            <div class="col-xs-12">
+              <input class="form-control" type="password" placeholder="Contraseña" formControlName="password">
+            </div>
+            <app-error-message-form [abstractControl]="registerForm.controls['password'] " [controlName]="'Password'"></app-error-message-form>
+          </div>
+          <div class="form-group">
+            <div class="col-xs-12">
+              <input class="form-control" type="password" placeholder="Confirmar Contraseña"
+                formControlName="password2">
+            </div>
+            <app-error-message-form [abstractControl]="registerForm.controls['password2']"></app-error-message-form>
+          </div>
+          <div class="form-group text-center m-t-20">
+            <div class="col-xs-12">
+              <button class="btn btn-primary btn-lg btn-block text-uppercase waves-effect waves-light"
+                type="submit">Registrar</button>
+            </div>
+          </div>
+          <div class="form-group m-b-0">
+            <div class="col-sm-12 text-center">
+              <a class="text-info m-l-5 cursor" (click)="goBack()"><b>Volver Atras</b></a>
+            </div>
+          </div>
+        </form>
+      </div>
     </div>
-</section>
+  </section>
 </div>

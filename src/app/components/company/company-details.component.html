@@ -1,0 +1,110 @@
+<app-navegation [buttonName]="'Guardar'" (whenSave)="onSave()" [btnHidden]="btnHidden">
+</app-navegation>
+<section class="border bg-white" [ngClass]="{'skeleton': isLoading$ | async}">
+  <div class="card-body p-b-0" [hidden]="!urlParams.isEdit">
+    <h4 class="card-title skeleton">Detalles Del Cliente</h4>
+    <h6 class="card-subtitle">{{model ? model.companyName : ''}}</h6>
+  </div>
+  <hr [hidden]="!urlParams.isEdit">
+  <div class="p-20">
+    <form class="form" [formGroup]="form">
+      <div class="row">
+
+        <div class="col-md-6">
+          <div class="card border">
+            <div class="card-header">
+              <h5>General</h5>
+            </div>
+            <div class="card-body">
+              <div class="form-group">
+                <label for="exampleInputuname">Nombre Compañia</label>
+                <div class="input-group">
+                  <div class="input-group-addon"
+                    [ngClass]="{'invalid': isValidForm(form.controls['companyName']), '': isValidForm(form.controls['companyName'])}">
+                    <i class="ti-user"></i>
+                  </div>
+                  <input type="text" class="form-control"
+                    [ngClass]="{'invalid': isValidForm(form.controls['companyName']), '': isValidForm(form.controls['companyName'])}"
+                    id="exampleInputuname" placeholder="Nombre Compañia" formControlName="companyName">
+                </div>
+                <app-error-message-form [abstractControl]="form.controls['companyName']"
+                  [controlName]="'Nombre Compañia'"></app-error-message-form>
+              </div>
+              <div class="form-group">
+                <label for="exampleInputuname">Apellidos*</label>
+                <div class="input-group">
+                  <div class="input-group-addon"
+                    [ngClass]="{'invalid': isValidForm(form.controls['rnc']), '': isValidForm(form.controls['rnc'])}">
+                    <i class="ti-user"></i>
+                  </div>
+                  <input type="text" class="form-control"
+                    [ngClass]="{'invalid': isValidForm(form.controls['rnc']), '': isValidForm(form.controls['rnc'])}"
+                    id="exampleInputuname" placeholder="Apellidos" formControlName="rnc">
+                </div>
+                <app-error-message-form [abstractControl]="form.controls['rnc']"
+                  [controlName]="'Apellidos'"></app-error-message-form>
+              </div>
+              <div class="form-group">
+                <label for="exampleInputuname">Mensaje*</label>
+                <textarea cols="30" rows="10"
+                class="form-control" id="exampleInputuname" placeholder="Mensaje"
+                  formControlName="message"
+                  [ngClass]="{'invalid': isValidForm(form.controls['message']), '': isValidForm(form.controls['message'])}"
+                ></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="card border">
+            <div class="card-header">
+              <h5>Contacto y Dirección</h5>
+            </div>
+            <div class="card-body">
+              <div class="form-group">
+                <label for="exampleInputuname">Dirección*</label>
+                <div class="input-group">
+                  <div class="input-group-addon"
+                    [ngClass]="{'invalid': isValidForm(form.controls['address']), '': isValidForm(form.controls['address'])}">
+                    <i class="ti-location-pin"></i>
+                  </div>
+                  <input type="text" class="form-control"
+                    [ngClass]="{'invalid': isValidForm(form.controls['address']), '': isValidForm(form.controls['address'])}"
+                    id="exampleInputuname" placeholder="Dirección" formControlName="address">
+                </div>
+                <app-error-message-form [abstractControl]="form.controls['address']"
+                  [controlName]="'Dirección'"></app-error-message-form>
+              </div>
+              <div class="form-group">
+                <label for="exampleInputuname">Telefono*</label>
+                <div class="input-group">
+                  <div class="input-group-addon"
+                    [ngClass]="{'invalid': isValidForm(form.controls['phone']), '': isValidForm(form.controls['phone'])}">
+                    <i class="fa fa-phone"></i>
+                  </div>
+                  <input type="text" class="form-control"
+                    [ngClass]="{'invalid': isValidForm(form.controls['phone']), '': isValidForm(form.controls['phone'])}"
+                    id="exampleInputuname" formControlName="phone" mask="(000) 000-0000" placeholder="(999) 999-9999">
+                </div>
+                <app-error-message-form [abstractControl]="form.controls['phone']"
+                  [controlName]="'Telefono'"></app-error-message-form>
+              </div>
+              <div class="form-group">
+                <label for="exampleInputuname">Correo Electronico</label>
+                <div class="input-group">
+                  <div class="input-group-addon">
+                    <i class="ti-email"></i>
+                  </div>
+                  <input type="text" class="form-control" id="exampleInputuname" formControlName="email"
+                    placeholder="Correo Electronico">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </form>
+  </div>
+</section>

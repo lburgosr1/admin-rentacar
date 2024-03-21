@@ -15,7 +15,7 @@ export class FacadeService {
   private _router!: Router;
   private _ngZone!: NgZone;
   private _activatedRoute!: ActivatedRoute;
-  private _toastr!: ToastrService;
+  private _toast!: ToastrService;
 
   constructor(private injector: Injector) {}
 
@@ -61,10 +61,10 @@ export class FacadeService {
     return this._activatedRoute;
   }
 
-  get toasttr() {
-    if (!this._toastr) {
-      this._toastr = this.injector.get(ToastrService);
+  get toast() {
+    if (!this._toast) {
+      this._toast = this.injector.get(ToastrService);
     }
-    return this._toastr;
+    return this._toast;
   }
 }

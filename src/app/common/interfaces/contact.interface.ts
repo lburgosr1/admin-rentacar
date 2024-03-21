@@ -24,7 +24,7 @@ export interface IContact {
 }
 
 export interface IEmail {
-  email: string;
+  userName: string;
   isPrimary: boolean;
   _id:   string;
 }

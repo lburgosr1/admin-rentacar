@@ -1,0 +1,113 @@
+<div class="modal-body">
+  <div class="content-modal">
+    <div class="d-flex mb-3">
+      <h3 class="modal-title">
+        {{isEdit ? 'Editar' : 'Nuevo'}} Vehículo
+      </h3>
+      <div class="ml-auto">
+        <button type="button" class="btn-close close pull-right" (click)="cancel()">
+          <span class="visually-hidden">&times;</span>
+        </button>
+      </div>
+    </div>
+    <div class="modal-body">
+      <form class="form-horizontal form-material" [formGroup]="form">
+        <div class="row">
+          <div class="col-lg-6">
+            <h6 class="card-subtitle">Tipo Vehículos</h6>
+            <div class="form-group">
+              <select class="form-control custom-select" formControlName="typeVehicle"
+              [ngClass]="{'form-control-danger': typeVehicle?.invalid}">
+                <option value="" selected disabled>Selecione*</option>
+                <option *ngFor="let type of typeVehicles" [value]="type.type_vehicle_id">
+                  {{type.typeVehicle}}
+                </option>
+              </select>
+              <app-error-message-form [abstractControl]="typeVehicle"
+                [controlName]="'Tipo Vehículo'"></app-error-message-form>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <h6 class="card-subtitle">Marcas</h6>
+            <div class="form-group">
+              <select class="form-control custom-select" formControlName="brand"
+              [ngClass]="{'form-control-danger': brand?.invalid}">
+                <option value="" selected disabled>Selecione*</option>
+                <option *ngFor="let brand of brands" [value]="brand.brand_vehicle_id">
+                  {{brand.brandVehicle}}
+                </option>
+              </select>
+              <app-error-message-form [abstractControl]="brand" [controlName]="'Marca'"></app-error-message-form>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-6">
+            <h6 class="card-subtitle">Modelos</h6>
+            <div class="form-group">
+              <select class="form-control custom-select" formControlName="model"
+              [ngClass]="{'form-control-danger': model?.invalid}">
+                <option value="" selected disabled>Selecione*</option>
+                <option *ngFor="let model of models" [value]="model.vehicle_model_id">
+                  {{model.vehicleModel}}
+                </option>
+              </select>
+              <app-error-message-form [abstractControl]="model" [controlName]="'Modelo'"></app-error-message-form>
+            </div>
+          </div>
+          <div class="col-lg-3">
+            <h6 class="card-subtitle">Registro/Placa</h6>
+            <div class="form-group">
+              <input type="text" class="form-control" [ngClass]="{'form-control-danger': plate?.invalid}"
+                formControlName="plate" placeholder="Placa*">
+              <app-error-message-form [abstractControl]="plate" [controlName]="'Placa'"></app-error-message-form>
+            </div>
+          </div>
+          <div class="col-lg-3">
+            <h6 class="card-subtitle">Año</h6>
+            <div class="form-group">
+              <input type="text" class="form-control" [ngClass]="{'form-control-danger': year?.invalid}"
+                formControlName="year" placeholder="Año*">
+              <app-error-message-form [abstractControl]="year" [controlName]="'Año'"></app-error-message-form>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4">
+                <h6 class="card-subtitle mb-3">Imagen</h6>
+
+                <div class="dropify-wrapper has-preview">
+                  <div class="dropify-message"><span class="file-icon"></span>
+                    <p>Drag and drop a file here or click</p>
+                    <p class="dropify-error">Ooops, something wrong appended.</p>
+                  </div>
+                  <div class="dropify-loader" style="display: none;"></div>
+                  <div class="dropify-errors-container">
+                    <ul></ul>
+                  </div>
+                  <input (change)="changeImage($event)" type="file" id="input-file-now-custom-1" class="dropify">
+                  <div class="dropify-preview" style="display: block;">
+                    <span class="dropify-render">
+                      <img *ngIf="!imgTemp" [src]="vehicle.imageVehicle" onerror="this.src='assets/images/logo-icon-ight.jpg'">
+                      <img *ngIf="imgTemp" [src]="imgTemp">
+                    </span>
+                    <div class="dropify-infos">
+                      <div class="dropify-infos-inner">
+                        <p class="dropify-filename"><span class="file-icon"></span> <span
+                            class="dropify-filename-inner">{{vehicle.imageUpload}}</span></p>
+                        <p class="dropify-infos-message">Arrastrar y soltar o hacer clic para reemplazar</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-sm btn-primary waves-effect" data-dismiss="modal"
+        (click)="accept()">Guardar</button>
+      <button type="button" class="btn btn-sm btn-default waves-effect" data-dismiss="modal"
+        (click)="cancel()">Cancelar</button>
+    </div>
+  </div>

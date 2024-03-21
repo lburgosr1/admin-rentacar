@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { IRoute } from '../interfaces/route.interface';
 import { IUrlParams } from '../constant/url-params';
 import { BehaviorSubject, Subject } from 'rxjs';
-import { Currency } from '../constant/enums.constant';
 
 @Injectable({
   providedIn: 'root'
@@ -86,7 +85,6 @@ export class UtilsService {
     }).join(" ");
   }
 
-
   isValidForm(obj1: any, obj2: any, isFormValid: boolean, isEdit = false): void {
     if (isEdit) {
       if (Object.keys(obj1).length && Object.keys(obj2).length) {
@@ -105,14 +103,6 @@ export class UtilsService {
     } else {
       this.whenFormIsValid$.next(isFormValid);
     }
-  }
-
-  getAllCurrency(): Array<Currency> {
-    return [
-      Currency.EUR,
-      Currency.RD,
-      Currency.US
-    ];
   }
 
   private validateObject(obj1: any, obj2: any): boolean {

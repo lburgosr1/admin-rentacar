@@ -5,7 +5,7 @@ import { BsModalRef } from 'ngx-bootstrap/modal';
 
 @Component({
   templateUrl: './app-modal-custom-message.component.html',
-  styleUrls: ['../modal.component.scss']
+  styleUrls: ['../modal.component.css']
 })
 export class AppModalCustomMessageComponent implements OnInit {
 

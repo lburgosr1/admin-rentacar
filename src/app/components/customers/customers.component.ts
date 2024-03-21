@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit } from '@angular/core';
 import { APPROUTES } from 'src/app/common/constant/app-routes.constant';
 import { Customer } from 'src/app/common/models/cusotmer.model';
 import { IPagination, Pagination } from 'src/app/common/models/paginate.model';
@@ -7,6 +7,9 @@ import { BaseComponent } from '../base.component';
 import { FacadeService } from 'src/app/common/services/facade.service';
 import { IUrlParams } from 'src/app/common/constant/url-params';
 import { PageChangedEvent } from 'ngx-bootstrap/pagination';
+import { AppModalCustomMessageComponent } from 'src/app/common/components/app-modals/custom-message/app-modal-custom-message.component';
+import { Modal } from 'src/app/common/components/app-modals/modal';
+import { BsModalService } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-customers',
@@ -18,13 +21,16 @@ export class CustomersComponent extends BaseComponent implements OnInit {
   customers!: Customer[];
   pagination!: IPagination;
   txtTerm: string = '';
+  status!: boolean;
   urlParams = {} as IUrlParams;
 
   constructor(
     private customerService: CustomersService,
-    facadeService: FacadeService
+    private modal: BsModalService,
+    facadeService: FacadeService,
+    elementRef: ElementRef
   ) {
-    super(facadeService);
+    super(facadeService, elementRef);
   }
 
   ngOnInit(): void {
@@ -32,6 +38,9 @@ export class CustomersComponent extends BaseComponent implements OnInit {
     this.facadeService.activatedRoute.queryParams.subscribe((params: any) => {
       this.urlParams = this.facadeService.utils.transformParamsObj(params) as IUrlParams;
       this.urlParams.term ? this.txtTerm = this.urlParams.term : '';
+      this.urlParams?.status ? this.status = this.urlParams.status :
+      this.urlParams?.status === undefined ? this.status = true :
+      this.status = false;
       this.urlParams?.page ? this.urlParams.page : this.urlParams.page = this.pagination.page;
       this.getCustomers();
     });
@@ -43,7 +52,8 @@ export class CustomersComponent extends BaseComponent implements OnInit {
     const params = {
       page: this.urlParams.page,
       count: this.pagination.count,
-      term: this.urlParams.term ? this.urlParams.term : this.pagination.term
+      term: this.urlParams.term ? this.urlParams.term : this.pagination.term,
+      status: this.status
     } as any;
 
     const paramsURL = new URLSearchParams(params);
@@ -69,11 +79,12 @@ export class CustomersComponent extends BaseComponent implements OnInit {
   }
 
   filterCustomers(): void {
-    if (!this.txtTerm) {
-      this.urlParams = {} as IUrlParams;
-      return;
-    }
     this.urlParams.term = this.txtTerm;
+    this.goTo(APPROUTES.customers, this.urlParams);
+  }
+
+  changeStatus(): void {
+    this.urlParams.status = this.status;
     this.goTo(APPROUTES.customers, this.urlParams);
   }
 
@@ -89,5 +100,32 @@ export class CustomersComponent extends BaseComponent implements OnInit {
   pageChanged(event: PageChangedEvent): void {
     this.urlParams.page = event.page;
     this.goTo(APPROUTES.customers, this.urlParams);
+  }
+
+  changeStatusCustomer(customer: Customer): void {
+    const modalModel = new Modal();
+
+    modalModel.buttonTextCancel = 'Cancelar';
+    modalModel.buttonTextConfirmation = 'Si';
+    modalModel.title = `${this.status ? 'Eliminar Cliente' : 'Activar Cliente'}`;
+    modalModel.body = `¿Desea ${this.status ? 'eliminar' : 'activar'} el cliente ${customer.firstName} ${customer.lastName}?`;
+
+    const modalRef = this.modal.show(AppModalCustomMessageComponent, { class: 'modal-dialog-centered' });
+    modalRef?.content?.set(modalModel);
+    modalRef?.content?.whenClose.subscribe((result: boolean) => {
+      if (result) {
+        const data = { ...customer, status: !customer.status } as Customer;
+
+        this.customerService.updateCustomer(data, data.customer_id).subscribe({
+          next: (resp) => {
+            this.getCustomers();
+            this.facadeService.toast.success('El estato del cliente fue actualizado con exito');
+          },
+          error: (err) => {
+            this.facadeService.toast.error(err.error.msg);
+          }
+        });
+      }
+    });
   }
 }

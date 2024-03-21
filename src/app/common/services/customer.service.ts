@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { map, Observable, Subject, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { CUSTOMER_URL } from '../constant/api-url.constant';
-import { IResponseCustomer, IResponseCustomers } from '../interfaces/customer.interface';
+import { IResponseAllCustomers, IResponseCustomer, IResponseCustomers } from '../interfaces/customer.interface';
 import { Customer } from '../models/cusotmer.model';
 
 const baseUrl = environment.base_url;
@@ -30,8 +30,16 @@ export class CustomersService {
   }
 
   getCustomers(params: string): Observable<IResponseCustomers> {
-    const url = `${baseUrl}/${CUSTOMER_URL.getCustomers}?${params}`;
+    const url = params ? `${baseUrl}/${CUSTOMER_URL.getCustomers}?${params}` : `${baseUrl}/${CUSTOMER_URL.getCustomers}`;
     return this.http.get<IResponseCustomers>(url, this.headers)
+      .pipe(
+        map(resp => resp)
+      );
+  }
+
+  getAllCustomers(): Observable<IResponseAllCustomers> {
+    const url = `${baseUrl}/${CUSTOMER_URL.getAllCustomers}`;
+    return this.http.get<IResponseAllCustomers>(url, this.headers)
       .pipe(
         map(resp => resp)
       );

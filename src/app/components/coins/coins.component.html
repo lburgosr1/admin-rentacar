@@ -1,0 +1,110 @@
+<div class="row animated fadeInRight">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+        <div class="row align-items-end" [ngClass]="{'skeleton': isLoading$ | async}">
+          <div class="col-md-6 col-lg-4 col-sm-12">
+            <label class="control-label">Buscar</label>
+            <div class="d-flex">
+              <input type="search" class="form-control" placeholder="Nombre o Apellido" [(ngModel)]="txtTerm"
+                (keyup.enter)="search()">
+              <button class="btn btn-primary btn-sm ml-2" (click)="search()">
+                <i class="fa fa-search" aria-hidden="true"></i>
+                Buscar
+              </button>
+            </div>
+          </div>
+          <div class="col-md-3 col-lg-3">
+            <label class="control-label">Estado</label>
+            <select class="form-control custom-select" (change)="changeStatus()" [(ngModel)]="status">
+              <option value=true selected>Activos</option>
+              <option value=false>Inactivos</option>
+            </select>
+          </div>
+          <div class="col-md-3 col-lg-5 col-sm-12">
+            <button class="btn btn-success btn-sm float-right" (click)="createCoin()">
+              <i class="fa fa-save"></i>
+              Nuevo
+            </button>
+          </div>
+        </div>
+        <div class="table-responsive">
+          <table class="table color-bordered-table info-bordered-table mt-3">
+            <thead>
+              <tr>
+                <th>Simbolo</th>
+                <th>Nombre</th>
+                <th>Estado</th>
+                <th class="text-nowrap w-100-px"></th>
+              </tr>
+            </thead>
+            <ng-container *ngIf="!(isLoading$ | async)">
+              <tbody>
+                <tr *ngFor="let coin of coins">
+                  <td>{{coin.symbol}}</td>
+                  <td>{{coin.coinName}}</td>
+                  <td>
+                    <span *ngIf="coin.status" class="label label-success">
+                      Activo
+                    </span>
+                    <span *ngIf="!coin.status" class="label label-danger">
+                      Inactivo
+                    </span>
+                  </td>
+                  <td class="text-center">
+                    <div class="btn-group dropleft">
+                      <div data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" aria-hidden="true">
+                        <a class="option-table">
+                          <i class="fa fa-ellipsis-v action-expand fa-lg"></i>
+                        </a>
+                      </div>
+
+                      <ul class="dropdown-menu dropdown-menu-dark">
+                        <li>
+                          <a class="dropdown-item cursor" (click)="createCoin(coin)" [hidden]="!coin.status">
+                            <i class="fa fa-pencil me-2"></i>
+                            Editar
+                          </a>
+                          <a class="dropdown-item disabled" [hidden]="coin.status">
+                            <i class="fa fa-pencil me-2"></i>
+                            Editar
+                          </a>
+                        </li>
+                        <li>
+                          <a class="dropdown-item cursor" *ngIf="coin.status" (click)="delete(coin)">
+                            <i class="fa fa-close me-2"></i>
+                            Eliminar
+                          </a>
+                          <a class="dropdown-item cursor" *ngIf="!coin.status" (click)="delete(coin)">
+                            <i class="fa fa-check me-2"></i>
+                            Activar
+                          </a>
+                        </li>
+                      </ul>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </ng-container>
+          </table>
+        </div>
+        <ng-container *ngIf="isLoading$ | async">
+          <ngx-skeleton-loader count="10" [theme]="{height: '45px'}"></ngx-skeleton-loader>
+        </ng-container>
+        <div class="row align-items-center">
+          <div class="col-8">
+            <h5 class="card-title">Total Registros {{pagination.totalRecord}}</h5>
+          </div>
+          <div class="col btn-toolbar justify-content-end">
+            <div *ngIf="pagination.totalRecord">
+              <pagination [totalItems]="pagination.totalRecord" [(ngModel)]="urlParams.page"
+                (pageChanged)="pageChanged($event)" [itemsPerPage]="pagination.count" [maxSize]="pagination.maxSize"
+                [boundaryLinks]="true" previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;"
+                lastText="&raquo;">
+              </pagination>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

@@ -31,7 +31,7 @@ export class ProfileComponent {
     this.formProfile = this.fb.group({
       firstName: [this.user.firstName, Validators.required],
       lastName: [this.user.lastName, Validators.required],
-      email: [this.user.email, Validators.required]
+      userName: [this.user.userName, Validators.required]
     });
   }
 
@@ -75,7 +75,7 @@ export class ProfileComponent {
       .updateFile(this.imageUpload, 'users', id)
       .then(img => {
         this.toastr.success('Imagen actualizada')
-        this.user.image = img;
+        //this.user.image = img;
       })
       .catch (error => {
         this.toastr.error(error.msg);

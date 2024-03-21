@@ -7,20 +7,18 @@ export class User {
   constructor(
     public firstName: string,
     public lastName: string,
-    public email: string,
+    public userName: string,
     public password: string,
-    public image?: string,
     public role?: string,
-    public google?: boolean,
+    public status?: boolean,
+    public image?: string,
     public user_id?: string,
     public _id?: string,
   ) {}
 
   get imageUser(): string {
 
-    if(this.google && this.image) {
-      return this.image;
-    } else if(this.image) {
+    if(this.image) {
       return `${base_url}/upload/users/${this.image}`;
     } else {
       return `${base_url}/upload/users/no-image`;
@@ -34,6 +32,6 @@ export class User {
   setUserProfile(user: User) {
     this.firstName = user.firstName;
     this.lastName = user.lastName;
-    this.email = user.email;
+    this.userName = user.userName;
   }
 }
