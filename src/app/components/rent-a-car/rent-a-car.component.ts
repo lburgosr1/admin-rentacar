@@ -13,6 +13,9 @@ import { APPROUTES } from 'src/app/common/constant/app-routes.constant';
 import { InvoiceService } from 'src/app/common/services/invoice.service';
 import { CompanysService } from 'src/app/common/services/company.service';
 import { IInvoice, IInvoiceRequest } from 'src/app/common/interfaces/invoice.interface';
+import { environment } from 'src/environments/environment';
+
+const baseUrl = environment.base_url;
 
 @Component({
   selector: 'app-rent-a-car',
@@ -49,6 +52,7 @@ export class RentACarComponent extends BaseComponent implements OnInit {
       this.urlParams?.page ? this.urlParams.page : this.urlParams.page = this.pagination.page;
       this.getRentACars();
     });
+    this.getCompanyDetails();
   }
 
   toggleRowDetail(index:number, row: any){
@@ -88,6 +92,12 @@ export class RentACarComponent extends BaseComponent implements OnInit {
     });
   }
 
+  getCompanyDetails(): void {
+    this.companyService.getCompany(environment.company_id).subscribe((company) => {
+      this.companyService.company = company;
+    });
+  }
+
   pageChanged(event: any) {
     this.urlParams.page = event.page;
     this.getRentACars();
@@ -112,7 +122,7 @@ export class RentACarComponent extends BaseComponent implements OnInit {
   generatePDF(invoiceRequest: IInvoiceRequest): void {
     const url = this.facadeService.router.serializeUrl(this.facadeService.router.createUrlTree([`/${APPROUTES.invoice}`], { queryParams: invoiceRequest }));
     const data = {
-      url: `http://localhost:4200${url}`
+      url: `${baseUrl}${url}`
     };
     this.invoiceService.createInvoice(data).subscribe({
       next: (resp) => {
