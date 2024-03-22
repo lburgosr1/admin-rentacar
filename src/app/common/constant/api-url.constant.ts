@@ -29,6 +29,15 @@ export const CUSTOMER_URL = {
   deleteCustomer: 'customer'
 };
 
+export const EMPLOYEE_URL = {
+  getEmployees: 'employee',
+  getAllEmployees: 'customer/all-employees',
+  getEmployee: 'employee',
+  createEmployee: 'employee',
+  updateEmployee: 'employee',
+  deleteEmployee: 'employee'
+};
+
 export const COIN_URL = {
   getCoins: 'coin',
   getAllCoins: 'coin/all-coins',
@@ -95,8 +104,8 @@ export const VEHICLE_URL = {
 };
 
 export const SEARCH_URL = {
-  searchAll: 'searchAll',
-  searchForCollection: 'searchAll/collection',
+  searchAll: 'search-all',
+  searchForCollection: 'search-all/collection',
 };
 
 export const PAYMENT = {

@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { map, Observable, Subject, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { INVOICE_URL } from '../constant/api-url.constant';
+import { IInvoice, IInvoiceResponse } from '../interfaces/invoice.interface';
 
 const baseUrl = environment.base_url;
 
@@ -27,9 +28,11 @@ export class InvoiceService {
     }
   }
 
-  getInvoice(id: string): Observable<any> {
+  getInvoice(id: string): Observable<IInvoice> {
     const url = `${baseUrl}/${INVOICE_URL.getInvoice}/${id}`;
-    return this.http.get<any>(url, this.headers);
+    return this.http.get<IInvoiceResponse>(url, this.headers).pipe(
+      map(resp => resp.invoices[0])
+    );
   }
 
   createInvoice(data: any): Observable<Blob> {

@@ -1,6 +1,7 @@
 export interface IUrlParams {
   companyId: string;
   customerId: string;
+  employeeId: string;
   term: string;
   status: boolean;
   page: number;

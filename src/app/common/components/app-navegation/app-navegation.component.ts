@@ -11,6 +11,7 @@ import { BaseComponent } from 'src/app/components/base.component';
 export class AppNavegationComponent extends BaseComponent implements OnInit {
 
   @Input() btnHidden!: boolean;
+  @Input() btnGoBack!: boolean;
   @Input() buttonName!: string;
   @Input() icon!: string;
 

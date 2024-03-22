@@ -23,12 +23,13 @@ const routes: Routes = [
       { path: APPROUTES.vehicles, loadChildren: () => import('../vehicles/vehicles.module').then(m => m.VehiclesModule) },
       { path: APPROUTES.rentACar, loadChildren: () => import('../rent-a-car/rent-a-car.module').then(m => m.RentACarModule) },
       { path: APPROUTES.coins, loadChildren: () => import('../coins/coins.module').then(m => m.CoinsModule) },
-      { path: APPROUTES.configuration, loadChildren: () => import('../configuration/configuration.module').then(m => m.ConfigurationModule) },
       { path: APPROUTES.documents, loadChildren: () => import('../documents/documents.module').then(m => m.DocumentsModule) },
-      { path: APPROUTES.employees, loadChildren: () => import('../employess/employess.module').then(m => m.EmployessModule) },
+      { path: APPROUTES.employees, loadChildren: () => import('../employess/employees.module').then(m => m.EmployeesModule) },
+      { path: APPROUTES.employeeDetails, loadChildren: () => import('../employess/employee-details/employee-details.module').then(m => m.EmployeeDetailsModule) },
       { path: APPROUTES.typeVehicles, loadChildren: () => import('../type-vehicles/type-vehicles.module').then(m => m.TypeVehiclesModule) },
       { path: APPROUTES.brandVehicles, loadChildren: () => import('../brand-vehicles/brand-vehicles.module').then(m => m.BrandVehiclesModule) },
       { path: APPROUTES.vehicleModels, loadChildren: () => import('../vehicle-models/vehicle-models.module').then(m => m.VehicleModelsModule) },
+      { path: APPROUTES.companyDetails, loadChildren: () => import('../company/company-details.module').then(m => m.CompanyDetailsModule) },
     ],
   }
 ];

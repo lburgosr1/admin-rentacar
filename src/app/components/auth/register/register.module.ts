@@ -5,6 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RegisterComponent } from './register.component';
 import { RegisterRoutingModule } from './register-routing.module';
 import { AppErrorMessageFormModule } from 'src/app/common/components/app-error-message-form/app-error-message-form.module';
+import { AppInputDebounceModule } from 'src/app/common/components/app-input-debounce/app-input-debounce.module';
 
 
 @NgModule({
@@ -16,7 +17,8 @@ import { AppErrorMessageFormModule } from 'src/app/common/components/app-error-m
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    AppErrorMessageFormModule
+    AppErrorMessageFormModule,
+    AppInputDebounceModule
   ],
   exports: [
     RegisterComponent

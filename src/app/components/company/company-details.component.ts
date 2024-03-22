@@ -7,7 +7,7 @@ import { BaseComponent } from 'src/app/components/base.component';
 import { IUrlParams } from 'src/app/common/constant/url-params';
 import { Company } from 'src/app/common/models/company.model';
 import { CompanysService } from 'src/app/common/services/company.service';
-import { CompanyModel } from './company';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-company-details',
@@ -21,7 +21,6 @@ export class CompanyDetailsComponent extends BaseComponent<Company> implements O
   activeTabIndex!: number;
   tabs!: ITab[];
   urlParams = {} as IUrlParams;
-  btnHidden!: boolean;
 
   constructor(
     private companyService: CompanysService,
@@ -38,14 +37,11 @@ export class CompanyDetailsComponent extends BaseComponent<Company> implements O
     });
 
     this.formInit();
+    this.getCompanyDetails();
     this.suscriptions();
 
-    if(this.model) {
-      if (this.urlParams.companyId) {
-        this.facadeService.utils.isValidForm(this.form.value, this.originalModel, this.form.valid, true);
-      } else {
-        this.facadeService.utils.isValidForm(this.form.value, this.originalModel, this.form.valid);
-      }
+    if (this.model) {
+      this.facadeService.utils.isValidForm(this.form.value, this.originalModel, this.form.valid, true);
     }
   }
 
@@ -63,24 +59,19 @@ export class CompanyDetailsComponent extends BaseComponent<Company> implements O
     });
 
     this.form.valueChanges.subscribe(() => {
-      if (this.urlParams.companyId) {
-        this.facadeService.utils.isValidForm(this.form.value, this.originalModel, this.form.valid, true);
-      } else {
-        this.facadeService.utils.isValidForm(this.form.value, this.originalModel, this.form.valid);
-      }
+      this.facadeService.utils.isValidForm(this.form.value, this.originalModel, this.form.valid, true);
+    });
+  }
+
+  getCompanyDetails(): void {
+    this.companyService.getCompany(environment.company_id).subscribe((company) => {
+      this.model = company;
+      this.formEdit();
     });
   }
 
   onSave(): void {
     this.editOrNewCompany();
-  }
-
-  getCompanyDetails(companyId: string): void {
-    this.startLoading();
-    this.companyService.getCompany(companyId).subscribe((company) => {
-      this.model = company;
-      this.formEdit();
-    });
   }
 
   formEdit(): void {
@@ -100,7 +91,7 @@ export class CompanyDetailsComponent extends BaseComponent<Company> implements O
     this.form = this.fb.group({
       companyName: ['', Validators.required],
       rnc: ['', Validators.required],
-      maessage: ['', Validators.required],
+      message: ['', Validators.required],
       address: ['', Validators.required],
       phone: ['', Validators.required],
       email: ['']
@@ -112,43 +103,17 @@ export class CompanyDetailsComponent extends BaseComponent<Company> implements O
       this.form.markAllAsTouched();
       return;
     }
-
-    let data;
-
-    data = {
-      companyName: this.form.controls['company'].value.trim(),
-      rnc: this.form.controls['rnc'].value.trim(),
-      message: this.form.controls['message'].value,
-      address: this.form.controls['address'].value,
-      phone: this.form.controls['phone'].value,
-      email: this.form.controls['email'].value
-    } as Company;
-
-    if (this.urlParams.isEdit) {
-      this.companyService.updateCompany(data, this.urlParams.companyId).subscribe({
-        next: (resp) => {
-          this.model = resp;
-          this.originalModel = this.form.value as Company;
-          this.toastr.success('La compañia fue actualizada con exito');
-          this.goBack();
-        },
-        error: (err) => {
-          this.toastr.error(err.error.msg);
-        }
-      })
-
-    } else {
-      this.companyService.createCompany(data).subscribe({
-        next: (resp) => {
-          this.model = resp.company;
-          this.originalModel = this.form.value as Company;
-          this.toastr.success('La compañia fue agregada con exito');
-          this.goBack();
-        },
-        error: (err) => {
-          this.toastr.error(err.error.msg);
-        }
-      });
-    }
+    this.startLoading();
+    this.companyService.updateCompany(this.form.value, environment.company_id).subscribe({
+      next: (resp) => {
+        this.model = resp;
+        this.originalModel = this.form.value as Company;
+        this.toastr.success('La compañia fue actualizada con exito');
+        this.finishLoading();
+      },
+      error: (err) => {
+        this.toastr.error(err.error.msg);
+      }
+    })
   }
 }

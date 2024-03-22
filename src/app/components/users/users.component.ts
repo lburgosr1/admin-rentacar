@@ -54,7 +54,8 @@ export class UsersComponent extends BaseComponent implements OnInit {
     const params = {
       page: this.urlParams.page,
       count: this.pagination.count,
-      term: this.urlParams.term ? this.urlParams.term : this.pagination.term
+      term: this.urlParams.term ? this.urlParams.term : this.pagination.term,
+      status: this.status
     } as any;
 
     const paramsURL = new URLSearchParams(params);
@@ -75,7 +76,7 @@ export class UsersComponent extends BaseComponent implements OnInit {
 
   search(): void {
     this.urlParams.term = this.txtTerm;
-    this.goTo(APPROUTES.users);
+    this.goTo(APPROUTES.users, this.urlParams);
   }
 
   newUser(): void {
@@ -93,7 +94,7 @@ export class UsersComponent extends BaseComponent implements OnInit {
 
   changeStatus(): void {
     this.urlParams.status = this.status;
-    this.goTo(APPROUTES.customers, this.urlParams);
+    this.goTo(APPROUTES.users, this.urlParams);
   }
 
   delete(user: User): void {

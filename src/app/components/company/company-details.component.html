@@ -1,4 +1,4 @@
-<app-navegation [buttonName]="'Guardar'" (whenSave)="onSave()" [btnHidden]="btnHidden">
+<app-navegation [buttonName]="'Guardar'" (whenSave)="onSave()" [btnGoBack]="true">
 </app-navegation>
 <section class="border bg-white" [ngClass]="{'skeleton': isLoading$ | async}">
   <div class="card-body p-b-0" [hidden]="!urlParams.isEdit">
@@ -17,11 +17,25 @@
             </div>
             <div class="card-body">
               <div class="form-group">
+                <label for="exampleInputuname">RNC*</label>
+                <div class="input-group">
+                  <div class="input-group-addon"
+                    [ngClass]="{'invalid': isValidForm(form.controls['rnc']), '': isValidForm(form.controls['rnc'])}">
+                    <i class="fa fa-building"></i>
+                  </div>
+                  <input type="text" class="form-control"
+                    [ngClass]="{'invalid': isValidForm(form.controls['rnc']), '': isValidForm(form.controls['rnc'])}"
+                    id="exampleInputuname" placeholder="RNC" formControlName="rnc">
+                </div>
+                <app-error-message-form [abstractControl]="form.controls['rnc']"
+                  [controlName]="'RNC'"></app-error-message-form>
+              </div>
+              <div class="form-group">
                 <label for="exampleInputuname">Nombre Compañia</label>
                 <div class="input-group">
                   <div class="input-group-addon"
                     [ngClass]="{'invalid': isValidForm(form.controls['companyName']), '': isValidForm(form.controls['companyName'])}">
-                    <i class="ti-user"></i>
+                    <i class="fa fa-building"></i>
                   </div>
                   <input type="text" class="form-control"
                     [ngClass]="{'invalid': isValidForm(form.controls['companyName']), '': isValidForm(form.controls['companyName'])}"
@@ -29,20 +43,6 @@
                 </div>
                 <app-error-message-form [abstractControl]="form.controls['companyName']"
                   [controlName]="'Nombre Compañia'"></app-error-message-form>
-              </div>
-              <div class="form-group">
-                <label for="exampleInputuname">Apellidos*</label>
-                <div class="input-group">
-                  <div class="input-group-addon"
-                    [ngClass]="{'invalid': isValidForm(form.controls['rnc']), '': isValidForm(form.controls['rnc'])}">
-                    <i class="ti-user"></i>
-                  </div>
-                  <input type="text" class="form-control"
-                    [ngClass]="{'invalid': isValidForm(form.controls['rnc']), '': isValidForm(form.controls['rnc'])}"
-                    id="exampleInputuname" placeholder="Apellidos" formControlName="rnc">
-                </div>
-                <app-error-message-form [abstractControl]="form.controls['rnc']"
-                  [controlName]="'Apellidos'"></app-error-message-form>
               </div>
               <div class="form-group">
                 <label for="exampleInputuname">Mensaje*</label>

@@ -1,12 +1,14 @@
 import { Component, ElementRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { UserService } from 'src/app/common/services/user.service';
 import { BaseComponent } from '../../base.component';
 import { FacadeService } from 'src/app/common/services/facade.service';
 import { ValidatorService } from 'src/app/common/services/validator.service';
 import { UserNameValidatorService } from 'src/app/common/services/user-name-validator.service';
+import { Employee } from 'src/app/common/models/employee.model';
+import { Observable, tap } from 'rxjs';
+import { SearchesService } from 'src/app/common/services/searches.service';
 
 @Component({
   selector: 'app-register',
@@ -17,14 +19,18 @@ export class RegisterComponent extends BaseComponent {
 
   registerForm: any;
   formSubmitted = false;
+  searchedEmployees: Employee[] = [];
+  showSearchesEmployee: boolean = false;
+  termEmployee!: string;
+  isSearching:boolean = false;
 
   constructor(
     private fb: FormBuilder,
     private userService: UserService,
     private toastr: ToastrService,
-    private router: Router,
     private userNameValidator: UserNameValidatorService,
     private validatorService: ValidatorService,
+    private searchesService: SearchesService,
     facadeService: FacadeService,
     elementRef: ElementRef
   ) {
@@ -42,7 +48,9 @@ export class RegisterComponent extends BaseComponent {
       userName: ['', Validators.required, [this.userNameValidator]],
       password: ['', Validators.required],
       password2: ['', Validators.required],
-      terms: [false, Validators.required]
+      role: ['', Validators.required],
+      terms: [false, Validators.required],
+      employeeId: ['']
     }, {
       validators:  [this.validatorService.similarFormFields('password', 'password2')]
     });
@@ -63,6 +71,36 @@ export class RegisterComponent extends BaseComponent {
         this.toastr.error(err?.error?.msg);
       }
     })
+  }
+
+  selectEmployee(employee: Employee): void {
+    this.registerForm.controls['firstName']?.setValue(employee.firstName);
+    this.registerForm.controls['lastName']?.setValue(employee.lastName);
+    this.registerForm.controls['employeeId']?.setValue(employee.employee_id);
+    this.termEmployee = `${employee.firstName} ${employee.lastName}`;
+    this.showSearchesEmployee = false;
+  }
+
+  getEmployees(value: string): Observable<Array<Employee>> {
+    return this.searchesService.search('employee', value);
+  }
+
+  custormerSerarch(term: string): void {
+    if(!term) {
+      this.isSearching = true;
+      this.showSearchesEmployee = false;
+      return;
+    }
+    const search$ = this.getEmployees(term).pipe(
+      tap(() => {
+        this.isSearching = false;
+        this.showSearchesEmployee = true;
+        this.termEmployee = term;
+      }));
+
+      search$.subscribe(data => {
+        this.searchedEmployees = data ? data : [];
+      })
   }
 
   invalidField(field: string): boolean {

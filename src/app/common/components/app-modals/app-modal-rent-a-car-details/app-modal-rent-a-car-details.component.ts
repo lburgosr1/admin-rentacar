@@ -1,11 +1,11 @@
-import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { RentACar } from 'src/app/common/models/rent-a-car.model';
 import { Customer } from 'src/app/common/models/cusotmer.model';
 import { Vehicle } from 'src/app/common/models/vehicle.model';
 import { Document } from 'src/app/common/models/document.model';
-import { Observable, of, tap } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import * as moment from 'moment';
 import { SearchesService } from 'src/app/common/services/searches.service';
 import { DocumentService } from 'src/app/common/services/document.service';
@@ -36,7 +36,6 @@ export class AppModalRentACarDetailsComponent implements OnInit {
 
   constructor(
     private modalRef: BsModalRef,
-    private cdr: ChangeDetectorRef,
     private searchesService: SearchesService,
     private documentsService: DocumentService,
     private coinService: CoinsService,
@@ -108,16 +107,6 @@ export class AppModalRentACarDetailsComponent implements OnInit {
         this.coins = coins;
       }
     })
-  }
-
-  getCustomersStorage(): void {
-    const customers = localStorage.getItem('customers');
-    this.customers = customers ? JSON.parse(customers) : [];
-  }
-
-  getVehiclesStorage(): void {
-    const vehicles = localStorage.getItem('vehicles');
-    this.vehicles = vehicles ? JSON.parse(vehicles) : [];
   }
 
   getCustomers(value: string): Observable<Array<Customer>> {

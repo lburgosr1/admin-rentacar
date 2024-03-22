@@ -2,10 +2,10 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { APPROUTES } from 'src/app/common/constant/app-routes.constant';
-import { EmployessComponent } from './employess.component';
+import { EmployeesComponent } from './employees.component';
 
 const routes: Routes = [
-    { path: APPROUTES.empty, component: EmployessComponent, data: { title: 'Empleados'} }
+    { path: APPROUTES.empty, component: EmployeesComponent, data: { title: 'Empleados'} }
 ];
 
 @NgModule({
@@ -13,4 +13,4 @@ const routes: Routes = [
     exports: [RouterModule]
 })
 
-export class EmployessRoutingModule { }
+export class EmployeesRoutingModule { }

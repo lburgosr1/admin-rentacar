@@ -18,26 +18,27 @@
   </tr>
   <tr>
     <td>
-      Fecha Factura: <strong>{{invoice.invoiceDate}}</strong>
+      Fecha Factura: <strong>{{invoice.invoiceDate | date: 'dd/MM/YYYY'}}</strong>
+    </td>
+    <td>
+      {{invoice.emailCustomer ? invoice.emailCustomer : '-'}}
     </td>
   </tr>
   <tr>
     <td>
       No. Factura: <strong>{{invoice.invoiceCode}}</strong>
     </td>
-    <td>
-      {{invoice.emailCustomer}}
-    </td>
+    <td></td>
   </tr>
 </table>
 
 <table class="line-items-container">
   <thead>
     <tr>
-      <th>Vehículo</th>
-      <th>Periodo De Renta</th>
-      <th>Precio Por Dia</th>
-      <th>Cantidad De Dias</th>
+      <th>Detalle Del Vehículo</th>
+      <th class="text-center">Periodo De Renta</th>
+      <th class="text-right">Precio P/ Dia</th>
+      <th class="text-center">Dias Renta</th>
       <th>Deposito</th>
     </tr>
   </thead>
@@ -48,11 +49,11 @@
         <br>
         <span>{{invoice.brad}} {{invoice.model}} {{invoice.year}}</span>
       </td>
-      <td>
-        <span>{{invoice.rentalStartDate}} - {{invoice.rentalEndDate}}</span>
+      <td class="text-center">
+        <span>{{invoice.rentalStartDate | date: 'dd/MM/YYYY'}} - {{invoice.rentalEndDate | date: 'dd/MM/YYYY'}}</span>
       </td>
-      <td >${{invoice.pricePerDay}}</td>
-      <td >${{invoice.daysOfRent}}</td>
+      <td class="text-right">${{invoice.pricePerDay}}</td>
+      <td class="text-center">{{invoice.daysOfRent}}</td>
       <td >${{invoice.deposit}}</td>
   </tbody>
 </table>
@@ -72,11 +73,11 @@
 
 <div class="footer">
   <div class="footer-info">
-    <span>mail@rentacar.com</span> |
-    <span>(809) 555 5555</span> |
-    <span>WebSite</span>
+    <span>{{invoice.companyName}} RNC: {{invoice.rnc}}</span> |
+    <span>{{invoice.phone}}</span> |
+    <span>{{invoice.email}}</span>
   </div>
   <div class="footer-thanks">
-    <span>Gracias Pro Preferirnos</span>
+    <span>{{invoice.message}}</span>
   </div>
 </div>

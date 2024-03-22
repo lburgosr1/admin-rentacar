@@ -7,6 +7,7 @@ import { SEARCH_URL } from '../constant/api-url.constant';
 import { Customer } from '../models/cusotmer.model';
 import { Document } from '../models/document.model';
 import { Vehicle } from '../models/vehicle.model';
+import { Employee } from '../models/employee.model';
 
 const baseUrl = environment.base_url;
 
@@ -51,6 +52,8 @@ export class SearchesService {
               return this.transformUsers(resp.result);
             case 'customer':
               return resp.result as Customer[];
+            case 'employee':
+              return resp.result as Employee[];
             case 'document':
               return resp.result as Document[];
             case 'vehicle':

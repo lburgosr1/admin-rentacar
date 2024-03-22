@@ -1,16 +1,3 @@
-<!-- <div class="row animated fadeInDown">
-  <div class="col-12">
-    <div class="card">
-      <div class="card-body">
-        <button class="btn btn-success btn-sm" (click)="newUser()">
-          <i class="fa fa-save"></i>
-          Nuevo Usuario
-        </button>
-      </div>
-    </div>
-  </div>
-</div>
- -->
 <div class="row animated fadeInRight">
   <div class="col-12">
     <div class="card">
@@ -61,12 +48,14 @@
                   </td>
                   <td>{{user.firstName}}</td>
                   <td>{{user.lastName}}</td>
-                  <span *ngIf="user.status" class="label label-success">
-                    Activo
-                  </span>
-                  <span *ngIf="!user.status" class="label label-danger">
-                    Inactivo
-                  </span>
+                  <td>
+                    <span *ngIf="user.status" class="label label-success">
+                      Activo
+                    </span>
+                    <span *ngIf="!user.status" class="label label-danger">
+                      Inactivo
+                    </span>
+                  </td>
                   <td>
                     <select class="form-control" [(ngModel)]="user.role" (change)="changeRole(user)">
                       <option [value]="typeRole.Admin">Admin</option>

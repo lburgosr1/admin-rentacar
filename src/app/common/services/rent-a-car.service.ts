@@ -56,7 +56,7 @@ export class RentACarService {
     return this.http.post<RentACar>(url, data, this.headers);
   }
 
-  updateRentACar(data: RentACar, id: string): Observable<RentACar> {
+  updateRentACar(data: any, id: string): Observable<RentACar> {
     const url = `${baseUrl}/${RENT_A_CAR_URL.updateRentACar}/${id}`;
     return this.http.put<RentACar>(url, data, this.headers);
   }

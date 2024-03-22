@@ -6,9 +6,9 @@
           <div class="col-md-6 col-lg-4 col-sm-12">
             <label class="control-label">Buscar</label>
             <div class="d-flex">
-              <input type="search" class="form-control" placeholder="Modelo" [(ngModel)]="txtTerm"
-                (keyup.enter)="search()">
-              <button class="btn btn-primary btn-sm ml-2" (click)="search()">
+              <input type="search" class="form-control" placeholder="Nombre o Apellido" [(ngModel)]="txtTerm"
+                (keyup.enter)="filterEmployees()">
+              <button class="btn btn-primary btn-sm ml-2" (click)="filterEmployees()">
                 <i class="fa fa-search" aria-hidden="true"></i>
                 Buscar
               </button>
@@ -16,13 +16,15 @@
           </div>
           <div class="col-md-3 col-lg-3">
             <label class="control-label">Estado</label>
-            <select class="form-control custom-select" (change)="changeStatus()" [(ngModel)]="status">
+            <select class="form-control custom-select"
+              (change)="changeStatus()"
+              [(ngModel)]="status">
               <option value=true selected>Activos</option>
               <option value=false>Inactivos</option>
             </select>
-          </div>
+        </div>
           <div class="col-md-3 col-lg-5 col-sm-12">
-            <button class="btn btn-success btn-sm float-right" (click)="createVehicleModel()">
+            <button class="btn btn-success btn-sm float-right" (click)="editOrNewEmployee()">
               <i class="fa fa-save"></i>
               Nuevo
             </button>
@@ -32,22 +34,33 @@
           <table class="table color-bordered-table info-bordered-table mt-3">
             <thead>
               <tr>
-                <th>Modelo</th>
-                <th>Marca</th>
+                <th>Nombres</th>
+                <th>Apellidos</th>
+                <th>Telefono</th>
+                <th>Email</th>
                 <th>Estado</th>
                 <th class="text-nowrap w-100-px"></th>
               </tr>
             </thead>
             <ng-container *ngIf="!(isLoading$ | async)">
               <tbody>
-                <tr *ngFor="let model of vehicleModels">
-                  <td>{{model.vehicleModel}}</td>
-                  <td>{{model.brand.brandVehicle}}</td>
+                <tr *ngFor="let employee of employees">
+                  <td>{{employee.firstName}}</td>
+                  <td>{{employee.lastName}}</td>
+                  <td>{{employee.phone | mask: '(000) 000-0000'}}</td>
                   <td>
-                    <span *ngIf="model.status" class="label label-success">
+                    <span *ngIf="employee?.email">
+                      {{employee.email}}
+                    </span>
+                    <span *ngIf="!employee?.email">
+                      -
+                    </span>
+                  </td>
+                  <td>
+                    <span *ngIf="employee.status" class="label label-success">
                       Activo
                     </span>
-                    <span *ngIf="!model.status" class="label label-danger">
+                    <span *ngIf="!employee.status" class="label label-danger">
                       Inactivo
                     </span>
                   </td>
@@ -61,21 +74,18 @@
 
                       <ul class="dropdown-menu dropdown-menu-dark">
                         <li>
-                          <a class="dropdown-item cursor" (click)="createVehicleModel(model)" [hidden]="!model.status">
-                            <i class="fa fa-pencil me-2"></i>
-                            Editar
-                          </a>
-                          <a class="dropdown-item disabled" [hidden]="model.status">
-                            <i class="fa fa-pencil me-2"></i>
-                            Editar
+                          <a class="dropdown-item" [routerLink]="['/employee-details']"
+                            (click)="editOrNewEmployee(employee)">
+                            <i class="fa fa-eye me-2"></i>
+                            Detalles
                           </a>
                         </li>
                         <li>
-                          <a class="dropdown-item cursor" *ngIf="model.status" (click)="delete(model)">
+                          <a class="dropdown-item" *ngIf="employee.status" (click)="changeStatusEmployee(employee)">
                             <i class="fa fa-close me-2"></i>
                             Eliminar
                           </a>
-                          <a class="dropdown-item cursor" *ngIf="!model.status" (click)="delete(model)">
+                          <a class="dropdown-item" *ngIf="!employee.status" (click)="changeStatusEmployee(employee)">
                             <i class="fa fa-check me-2"></i>
                             Activar
                           </a>

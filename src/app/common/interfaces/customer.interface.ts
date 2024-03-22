@@ -20,9 +20,9 @@ export interface ICustomer {
   firstName: string;
   lastName: string;
   document: string;
-  user: string;
   address: any[];
-  contacts: ICustomerContact[];
+  phone: string;
+  email: string;
   customer_id: string;
   typeDocument: string;
   _id: string;
