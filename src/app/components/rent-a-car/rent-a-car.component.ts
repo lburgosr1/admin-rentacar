@@ -15,7 +15,7 @@ import { CompanysService } from 'src/app/common/services/company.service';
 import { IInvoice, IInvoiceRequest } from 'src/app/common/interfaces/invoice.interface';
 import { environment } from 'src/environments/environment';
 
-const baseUrl = environment.base_url;
+const baseUrl = environment.base_url_web;
 
 @Component({
   selector: 'app-rent-a-car',
@@ -120,7 +120,8 @@ export class RentACarComponent extends BaseComponent implements OnInit {
   }
 
   generatePDF(invoiceRequest: IInvoiceRequest): void {
-    const url = this.facadeService.router.serializeUrl(this.facadeService.router.createUrlTree([`/${APPROUTES.invoice}`], { queryParams: invoiceRequest }));
+    const url = this.facadeService.router.serializeUrl(
+        this.facadeService.router.createUrlTree([`/${APPROUTES.invoice}`], { queryParams: invoiceRequest }));
     const data = {
       url: `${baseUrl}${url}`
     };
