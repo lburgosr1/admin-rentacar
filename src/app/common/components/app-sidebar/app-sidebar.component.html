@@ -21,7 +21,8 @@
         <li class="nav-devider"></li>
         <li class="nav-small-cap">ADMINISTRAR</li>
         <li *ngFor="let item of sidebarService.menu">
-          <a class="has-arrow waves-effect waves-dark" routerLinkActive="active" [routerLink]="item.url" aria-expanded="false">
+          <ng-container *ngIf="item.url !== 'reports'">
+            <a class="has-arrow waves-effect waves-dark" routerLinkActive="active" [routerLink]="item.url" aria-expanded="false">
               <i [class]="item.icon"></i>
               <span class="hide-menu">
                   {{ item.title }}
@@ -30,6 +31,18 @@
                 </span>
               </span>
           </a>
+          </ng-container>
+          <ng-container *ngIf="item.url === 'reports'">
+            <a class="has-arrow waves-effect waves-dark" (click)="report()" aria-expanded="false">
+              <i [class]="item.icon"></i>
+              <span class="hide-menu">
+                  {{ item.title }}
+                  <span class="label label-rouded label-themecolor pull-right" *ngIf="item && item.submenu">
+                    {{ item.submenu.length }}
+                </span>
+              </span>
+          </a>
+          </ng-container>
           <ul aria-expanded="false" class="collapse">
             <li *ngFor="let subMenuItem of item.submenu">
                 <a routerLinkActive="active" [routerLink]="subMenuItem.url">

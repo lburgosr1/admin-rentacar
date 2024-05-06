@@ -119,3 +119,7 @@ export const VALIDATOR_URL = {
   documentValidator: 'document-validator',
   userNameValidator: 'user-name-validator'
 }
+
+export const PDF_URL = {
+  generatePDF: 'generate-pdf'
+};
